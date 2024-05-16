@@ -21,21 +21,24 @@ type SignUpPayload struct {
 }
 
 type LoginResponse struct {
-	Token string `json:"token"`
-	ID    uint   `json:"id"`
+	Token string        `json:"token"`
+	ID    uint          `json:"id"`
+	User  entities.User `json:"user"`
+	Role  string
 }
 
 func Login(c *gin.Context) {
 	var payload LoginPayload
 	var user entities.User
+	var userRole entities.UserRole
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := entities.DB().Raw("SELECT * FROM users WHERE email = ?", payload.Email).Scan(&user).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if tx := entities.DB().Raw("SELECT * FROM users WHERE email = ?", payload.Email).Preload("UserRole").Find(&user); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
 		return
 	}
 
@@ -62,9 +65,16 @@ func Login(c *gin.Context) {
 		return
 	}
 
+	if tx := entities.DB().Raw("SELECT * FROM user_roles WHERE user_role_name = ?", user.UserRoleId).First(&userRole); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User Role not found"})
+		return
+	}
+
 	tokenResponse := LoginResponse{
 		Token: signedToken,
 		ID:    user.ID,
+		User:  user,
+		Role:  userRole.UserRoleName,
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})

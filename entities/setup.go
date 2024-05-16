@@ -41,4 +41,6 @@ func SetupDatabase() {
 	)
 
 	db = database
+
+	// TODO: Mock up data
 }
