@@ -18,9 +18,10 @@ type User struct {
 	UserRoleId *uint
 	UserRole   UserRole
 
-	Carts           []Cart
-	Reviews         []Review
-	BookUserDetails []BookUserDetail
+	Carts           []Cart           `gorm:"foreignKey:UserId"`
+	Reviews         []Review         `gorm:"foreignKey:UserId"`
+	BookUserDetails []BookUserDetail `gorm:"foreignKey:UserId"`
+	Orders          []Order          `gorm:"foreignKey:UserId"`
 }
 
 type UserRole struct {

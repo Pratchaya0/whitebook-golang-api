@@ -38,7 +38,7 @@ func Login(c *gin.Context) {
 	}
 
 	if tx := entities.DB().Raw("SELECT * FROM users WHERE email = ?", payload.Email).Preload("UserRole").Find(&user); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 		return
 	}
 
@@ -66,7 +66,7 @@ func Login(c *gin.Context) {
 	}
 
 	if tx := entities.DB().Raw("SELECT * FROM user_roles WHERE user_role_name = ?", user.UserRoleId).First(&userRole); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "User Role not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user role not found"})
 		return
 	}
 
