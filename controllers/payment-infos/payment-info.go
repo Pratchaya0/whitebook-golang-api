@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,6 +12,12 @@ func CreatePaymentInfo(c *gin.Context) {
 	var paymentInfo entities.PaymentInfo
 
 	if err := c.ShouldBindJSON(&paymentInfo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(paymentInfo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -57,6 +64,12 @@ func UpdatePaymentInfo(c *gin.Context) {
 	var paymentInfo entities.PaymentInfo
 
 	if err := c.ShouldBindJSON(&paymentInfo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(paymentInfo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
