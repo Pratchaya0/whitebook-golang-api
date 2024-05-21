@@ -51,6 +51,13 @@ func main() {
 			protected.PATCH("book-preview-image/update", books.UpdateBookPreviewImage)
 			protected.DELETE("book-preview-image/delete/:id", books.DeleteBookPreviewImage)
 
+			// Book User Detail
+			protected.GET("book-user-details", books.GetListBookUserDetails)
+			protected.GET("book-user-detail", books.GetBookUserDetail)
+			protected.POST("book-user-detail/create", books.CreateBookUserDetail)
+			protected.PATCH("book-user-detail/update", books.UpdateBookUserDetail)
+			protected.DELETE("book-user-detail/delete/:id", books.DeleteBookUserDetail)
+
 			// Cart
 			protected.GET("carts", carts.GetListCarts)
 			protected.GET("cart/:id", carts.GetCart)

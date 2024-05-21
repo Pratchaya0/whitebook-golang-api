@@ -89,11 +89,6 @@ func UpdateBook(c *gin.Context) {
 		return
 	}
 
-	if tx := entities.DB().Where("id = ?", book.ID).First(&book); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "book not found"})
-		return
-	}
-
 	if tx := entities.DB().Where("id = ?", book.BookCategoryId).First(&category); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "category not found"})
 		return
