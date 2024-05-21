@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,6 +14,12 @@ func CreateCart(c *gin.Context) {
 	var user entities.User
 
 	if err := c.ShouldBindJSON(&cart); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(cart); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -68,6 +75,12 @@ func UpdateCart(c *gin.Context) {
 	var cart entities.Cart
 
 	if err := c.ShouldBindJSON(&cart); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(cart); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

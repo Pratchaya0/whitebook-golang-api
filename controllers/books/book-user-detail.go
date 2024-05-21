@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +15,12 @@ func CreateBookUserDetail(c *gin.Context) {
 	var user entities.User
 
 	if err := c.ShouldBindJSON(&bookUserDetail); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(bookUserDetail); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -73,6 +80,12 @@ func UpdateBookUserDetail(c *gin.Context) {
 	var user entities.User
 
 	if err := c.ShouldBindJSON(&bookUserDetail); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(bookUserDetail); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
