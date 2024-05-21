@@ -18,7 +18,7 @@ type Advertisement struct {
 }
 
 // BeforeCreate sets default values for AdvertisementCreateDate and AdvertisementUpdateDate
-func (adv *Advertisement) BeforeCreate(tx *gorm.DB) (err error) {
+func (adv *Advertisement) BeforeAdvertisementCreate(tx *gorm.DB) (err error) {
 	now := time.Now()
 	if adv.AdvertisementCreateDate.IsZero() {
 		adv.AdvertisementCreateDate = now
@@ -30,7 +30,7 @@ func (adv *Advertisement) BeforeCreate(tx *gorm.DB) (err error) {
 }
 
 // BeforeUpdate sets the AdvertisementUpdateDate to the current time
-func (adv *Advertisement) BeforeUpdate(tx *gorm.DB) (err error) {
+func (adv *Advertisement) BeforeAdvertisementUpdate(tx *gorm.DB) (err error) {
 	adv.AdvertisementUpdateDate = time.Now()
 	return
 }
