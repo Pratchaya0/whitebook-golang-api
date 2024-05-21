@@ -41,15 +41,15 @@ type BookPreviewImage struct {
 
 type BookUserDetail struct {
 	gorm.Model
-	BookUserDetailIsAvailable bool `gorm:"default:false"`
+	BookUserDetailIsAvailable bool `gorm:"default:false" valid:"required~Please input book user detail is available"`
 	BookUserDetailIsActive    bool `gorm:"default:true"`
 	BookUserDetailCreateDate  time.Time
 	BookUserDetailUpdateDate  time.Time
 
-	BookId *uint
-	Book   Book
-	UserId *uint
-	User   User
+	BookId *uint `valid:"required~Please input book id"`
+	Book   Book  `valid:"-"`
+	UserId *uint `valid:"required~Please input user id"`
+	User   User  `valid:"-"`
 }
 
 func (adv *Book) BeforeBookCreate(tx *gorm.DB) (err error) {
