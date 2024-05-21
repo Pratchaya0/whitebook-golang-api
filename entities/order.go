@@ -17,6 +17,8 @@ type Order struct {
 
 	PaymentInfoId *uint
 	PaymentInfo   PaymentInfo
+	UserId        *uint
+	User          User
 
 	OrderBookDetails []OrderBookDetail `gorm:"foreignKey:OrderId"`
 }
