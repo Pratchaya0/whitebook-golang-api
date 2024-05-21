@@ -19,8 +19,8 @@ type Genre struct {
 type GenreBook struct {
 	gorm.Model
 
-	GenreId *uint
-	Genre   Genre
-	BookId  *uint
-	Book    Book
+	GenreId *uint `valid:"required~Please input genre id"`
+	Genre   Genre `valid:"-"`
+	BookId  *uint `valid:"required~Please input book id"`
+	Book    Book  `valid:"-"`
 }
