@@ -20,8 +20,8 @@ type Book struct {
 	BookCreateDate    time.Time `json:"create_date"`
 	BookUpdateDate    time.Time `json:"update_date"`
 
-	BookCategoryId *uint `json:"category_id" valid:"required~Please select category"`
-	Category       Category
+	BookCategoryId *uint    `json:"category_id" valid:"required~Please select category"`
+	Category       Category `valid:"-"`
 
 	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookId"`
 	Reviews           []Review           `gorm:"foreignKey:BookId"`
@@ -33,10 +33,10 @@ type Book struct {
 
 type BookPreviewImage struct {
 	gorm.Model
-	BookPreviewImageUrl string
+	BookPreviewImageUrl string `json:"preview_image_url" valid:"required~Please input preview image url"`
 
-	BookId *uint
-	Book   Book
+	BookId *uint `json:"book_id" valid:"required~Please select book"`
+	Book   Book  `valid:"-"`
 }
 
 type BookUserDetail struct {

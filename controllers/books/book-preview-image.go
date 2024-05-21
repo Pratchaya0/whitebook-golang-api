@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,6 +13,12 @@ func CreateBookPreviewImage(c *gin.Context) {
 	var book entities.Book
 
 	if err := c.ShouldBindJSON(&bookPreviewImage); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(bookPreviewImage); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -62,6 +69,12 @@ func UpdateBookPreviewImage(c *gin.Context) {
 	var bookPreviewImage entities.BookPreviewImage
 
 	if err := c.ShouldBindJSON(&bookPreviewImage); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(bookPreviewImage); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
