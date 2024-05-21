@@ -8,8 +8,8 @@ import (
 
 type Genre struct {
 	gorm.Model
-	GenreName       string
-	GenreIsActive   bool `gorm:"default:false"` // Form soft delete
+	GenreName       string `valid:"required~Please input genre name"`
+	GenreIsActive   bool   `gorm:"default:false"` // Form soft delete
 	GenreCreateDate time.Time
 	GenreUpdateDate time.Time
 
