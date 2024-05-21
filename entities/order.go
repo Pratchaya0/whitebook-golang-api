@@ -26,8 +26,8 @@ type Order struct {
 type OrderBookDetail struct {
 	gorm.Model
 
-	OrderId *uint
-	Order   Order
-	BookId  *uint
-	Book    Book
+	OrderId *uint `valid:"required~Please input order id"`
+	Order   Order `valid:"-"`
+	BookId  *uint `valid:"required~Please input book id"`
+	Book    Book  `valid:"-"`
 }
