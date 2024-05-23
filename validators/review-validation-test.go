@@ -22,7 +22,7 @@ func TestReviewValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(review)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input comment"))
 	})
 
 	t.Run("check [UserId] not blank", func(t *testing.T) {
@@ -35,7 +35,7 @@ func TestReviewValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(review)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input user id"))
 	})
 
 	t.Run("check [BookId] not blank", func(t *testing.T) {
@@ -48,6 +48,6 @@ func TestReviewValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(review)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input book id"))
 	})
 }

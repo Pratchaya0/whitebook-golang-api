@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,6 +25,12 @@ func UpdateWebInfo(c *gin.Context) {
 	var webInfo entities.WebInfo
 
 	if err := c.ShouldBindJSON(&webInfo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// แทรกการ validate ไว้ช่วงนี้ของ controller
+	if _, err := govalidator.ValidateStruct(webInfo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
