@@ -1,0 +1,116 @@
+basePath: /
+definitions:
+  responses.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      status:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: '-'
+  title: Documenting Whitebook API
+  version: "1"
+paths:
+  /book:
+    get:
+      description: '-'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book/create:
+    post:
+      description: '-'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book/delete:
+    delete:
+      description: '-'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book/update:
+    patch:
+      description: '-'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /books:
+    get:
+      description: get string by ID
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: ลงชื่อเข้าใช้ระบบ
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      summary: Login
+      tags:
+      - Auth
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: แก้ไขข้อมูลหนังสือ
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      tags:
+      - Auth
+securityDefinitions:
+  bearerToken:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

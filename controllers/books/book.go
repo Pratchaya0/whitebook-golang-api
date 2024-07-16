@@ -3,11 +3,19 @@ package books
 import (
 	"net/http"
 
+	"github.com/Pratchaya0/whitebook-golang-api/dtos/responses"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get a list of books in the the store
+// @Tag Book
+// @Description -
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book/create [post]
 func CreateBook(c *gin.Context) {
 	var book entities.Book
 	var category entities.Category
@@ -45,9 +53,22 @@ func CreateBook(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"data": bookCreate})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   bookCreate,
+	}
+
+	c.JSON(http.StatusCreated, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag Book
+// @Description -
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book [get]
 func GetBook(c *gin.Context) {
 	bookId := c.Param("bookId")
 
@@ -58,9 +79,22 @@ func GetBook(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": book})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   book,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag Book
+// @Description get string by ID
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /books [get]
 func GetListBooks(c *gin.Context) {
 	var books []entities.Book
 
@@ -69,9 +103,22 @@ func GetListBooks(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": books})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   books,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag Book
+// @Description -
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book/update [patch]
 func UpdateBook(c *gin.Context) {
 	var book entities.Book
 	var category entities.Category
@@ -109,9 +156,22 @@ func UpdateBook(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": bookUpdate})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   bookUpdate,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag Book
+// @Description -
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book/delete [delete]
 func DeleteBook(c *gin.Context) {
 	bookId := c.Param("bookId")
 
@@ -120,5 +180,11 @@ func DeleteBook(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": "book id: " + bookId + " has been deleted"})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   "book id: " + bookId + " has been deleted",
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }

@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/Pratchaya0/whitebook-golang-api/dtos/responses"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/Pratchaya0/whitebook-golang-api/services"
 	"github.com/gin-gonic/gin"
@@ -27,6 +28,14 @@ type LoginResponse struct {
 	Role  string
 }
 
+// @Summary Login
+// @Schemes
+// @Description ลงชื่อเข้าใช้ระบบ
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /login [post]
 func Login(c *gin.Context) {
 	var payload LoginPayload
 	var user entities.User
@@ -77,9 +86,22 @@ func Login(c *gin.Context) {
 		Role:  userRole.UserRoleName,
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   tokenResponse,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }
 
+// @Summary
+// @Description แก้ไขข้อมูลหนังสือ
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /signup [post]
 func SignUp(c *gin.Context) {
 	var payload SignUpPayload
 	var user entities.User
@@ -105,5 +127,11 @@ func SignUp(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"data": user})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   user,
+	}
+
+	c.JSON(http.StatusCreated, webResponse)
 }

@@ -12,17 +12,33 @@ import (
 	reviews "github.com/Pratchaya0/whitebook-golang-api/controllers/reviews"
 	users "github.com/Pratchaya0/whitebook-golang-api/controllers/users"
 	webInfos "github.com/Pratchaya0/whitebook-golang-api/controllers/web-infos"
+	"github.com/Pratchaya0/whitebook-golang-api/docs"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/Pratchaya0/whitebook-golang-api/middlewares"
 	"github.com/gin-gonic/gin"
+
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @BasePath /
+
 const PORT = "8080"
+
+// @title Documenting Whitebook API
+// @version 1
+// @Description -
+
+// @securityDefinitions.apikey bearerToken
+// @in header
+// @name Authorization
 
 func main() {
 	entities.SetupDatabaseII()
 
 	r := gin.Default()
+
+	docs.SwaggerInfo.BasePath = "/"
 
 	r.Use(CORSMiddleware())
 
@@ -132,6 +148,8 @@ func main() {
 			protected.PATCH("web-info/update", webInfos.UpdateWebInfo)
 		}
 	}
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	// Sign Up User Route
 	r.POST("/signup", controllers.SignUp)
