@@ -23,7 +23,7 @@ func CreateBookPreviewImage(c *gin.Context) {
 		return
 	}
 
-	if tx := entities.DB().Where("id = ?", bookPreviewImage.BookId).First(&book); tx.RowsAffected == 0 {
+	if tx := entities.DB().Where("id = ?", bookPreviewImage.BookPreviewImageBookId).First(&book); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "book not found"})
 		return
 	}

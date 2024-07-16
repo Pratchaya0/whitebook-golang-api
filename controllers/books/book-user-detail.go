@@ -24,7 +24,7 @@ func CreateBookUserDetail(c *gin.Context) {
 		return
 	}
 
-	if tx := entities.DB().Where("id = ?", bookUserDetail.BookId).First(&book); tx.RowsAffected == 0 {
+	if tx := entities.DB().Where("id = ?", bookUserDetail.BookUserDetailBookId).First(&book); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "book not found"})
 		return
 	}
@@ -88,7 +88,7 @@ func UpdateBookUserDetail(c *gin.Context) {
 		return
 	}
 
-	if tx := entities.DB().Where("id = ?", bookUserDetail.BookId).First(&book); tx.RowsAffected == 0 {
+	if tx := entities.DB().Where("id = ?", bookUserDetail.BookUserDetailBookId).First(&book); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "book not found"})
 		return
 	}

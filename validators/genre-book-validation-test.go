@@ -15,7 +15,7 @@ func TestGenreBookValidateNotBlank(t *testing.T) {
 	t.Run("check [GenreId] not blank", func(t *testing.T) {
 		genreBook := GenreBook{
 			// GenreId: &tmpId,
-			BookId: &tmpId,
+			GenreBookBookId: &tmpId,
 		}
 
 		ok, err := govalidator.ValidateStruct(genreBook)

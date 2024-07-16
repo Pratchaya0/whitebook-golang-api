@@ -6,9 +6,8 @@ import (
 
 type Category struct {
 	gorm.Model
-	CategoryName     string `valid:"required~Please input category name"`
-	CategoryIcon     string
-	CategoryIsActive bool `gorm:"default:true"` // Form soft delete
+	CategoryName string `valid:"required~Please input category name"`
+	CategoryIcon string
 
-	Books []Book `gorm:"foreignKey:BookId"`
+	Books []Book `gorm:"foreignKey:BookCategoryId"`
 }

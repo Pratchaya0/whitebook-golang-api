@@ -15,8 +15,8 @@ func TestReviewValidateNotBlank(t *testing.T) {
 	t.Run("check [ReviewComment] not blank", func(t *testing.T) {
 		review := Review{
 			// ReviewComment: "ReviewComment",
-			UserId: &tmpId,
-			BookId: &tmpId,
+			UserId:       &tmpId,
+			ReviewBookId: &tmpId,
 		}
 
 		ok, err := govalidator.ValidateStruct(review)
@@ -29,7 +29,7 @@ func TestReviewValidateNotBlank(t *testing.T) {
 		review := Review{
 			ReviewComment: "ReviewComment",
 			// UserId: &tmpId,
-			BookId: &tmpId,
+			ReviewBookId: &tmpId,
 		}
 
 		ok, err := govalidator.ValidateStruct(review)

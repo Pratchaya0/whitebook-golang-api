@@ -15,8 +15,8 @@ func TestBookUserDetailValidateNotBlank(t *testing.T) {
 	t.Run("check [BookUserDetailIsAvailable] not blank", func(t *testing.T) {
 		bookUserDetail := BookUserDetail{
 			// BookUserDetailIsAvailable: true,
-			BookId: &tmpId,
-			UserId: &tmpId,
+			BookUserDetailBookId: &tmpId,
+			UserId:               &tmpId,
 		}
 
 		ok, err := govalidator.ValidateStruct(bookUserDetail)
@@ -41,7 +41,7 @@ func TestBookUserDetailValidateNotBlank(t *testing.T) {
 	t.Run("check [UserId] not blank", func(t *testing.T) {
 		bookUserDetail := BookUserDetail{
 			BookUserDetailIsAvailable: true,
-			BookId:                    &tmpId,
+			BookUserDetailBookId:      &tmpId,
 			// UserId: &tmpId,
 		}
 

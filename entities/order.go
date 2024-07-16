@@ -11,9 +11,9 @@ type Order struct {
 	OrderIsPaid          bool   `valid:"required~Please input is paid" gorm:"default:false"`
 
 	PaymentInfoId *uint       `valid:"required~Please input payment info id"`
-	PaymentInfo   PaymentInfo `valid:"-"`
+	PaymentInfo   PaymentInfo `gorm:"foreignKey:PaymentInfoId"`
 	UserId        *uint       `valid:"required~Please input user id"`
-	User          User        `valid:"-"`
+	User          User        `gorm:"foreignKey:UserId"`
 
 	OrderBookDetails []OrderBookDetail `gorm:"foreignKey:OrderId"`
 }
@@ -21,8 +21,8 @@ type Order struct {
 type OrderBookDetail struct {
 	gorm.Model
 
-	OrderId *uint `valid:"required~Please input order id"`
-	Order   Order `valid:"-"`
-	BookId  *uint `valid:"required~Please input book id"`
-	Book    Book  `valid:"-"`
+	OrderId               *uint `valid:"required~Please input order id"`
+	Order                 Order `gorm:"foreignKey:OrderId"`
+	OrderBookDetailBookId *uint `valid:"required~Please input book id"`
+	Book                  Book  `gorm:"foreignKey:OrderBookDetailBookId"`
 }

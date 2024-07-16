@@ -14,8 +14,8 @@ func TestBookPreviewImageValidateNotBlank(t *testing.T) {
 
 	t.Run("check [BookPreviewImageUrl] not blank", func(t *testing.T) {
 		bookPreviewImage := BookPreviewImage{
-			BookPreviewImageUrl: "BookPreviewImageUrl",
-			BookId:              &tmpBookId,
+			BookPreviewImageUrl:    "BookPreviewImageUrl",
+			BookPreviewImageBookId: &tmpBookId,
 		}
 
 		ok, err := govalidator.ValidateStruct(bookPreviewImage)

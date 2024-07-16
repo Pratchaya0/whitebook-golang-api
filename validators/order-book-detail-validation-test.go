@@ -15,7 +15,7 @@ func TestOrderBookDetailValidateNotBlank(t *testing.T) {
 	t.Run("check [OrderId] not blank", func(t *testing.T) {
 		orderBookDetail := OrderBookDetail{
 			// OrderId: &tmpId,
-			BookId: &tmpId,
+			OrderBookDetailBookId: &tmpId,
 		}
 
 		ok, err := govalidator.ValidateStruct(orderBookDetail)

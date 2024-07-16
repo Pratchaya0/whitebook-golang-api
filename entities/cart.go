@@ -5,8 +5,8 @@ import "gorm.io/gorm"
 type Cart struct {
 	gorm.Model
 
-	BookId *uint `valid:"required~Please input book id"`
-	Book   Book  `valid:"-"`
-	UserId *uint `valid:"required~Please input user id"`
-	User   User  `valid:"-"`
+	CartBookId *uint `valid:"required~Please input book id"`
+	Book       Book  `gorm:"foreignKey:CartBookId"`
+	UserId     *uint `valid:"required~Please input user id"`
+	User       User  `gorm:"foreignKey:UserId"`
 }

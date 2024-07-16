@@ -16,30 +16,30 @@ type Book struct {
 	BookUrl           string `json:"url" valid:"required~Please input book"`
 
 	BookCategoryId *uint    `json:"category_id" valid:"required~Please select category"`
-	Category       Category `valid:"-"`
+	Category       Category `gorm:"foreignKey:BookCategoryId"`
 
-	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookId"`
-	Reviews           []Review           `gorm:"foreignKey:BookId"`
-	GenreBooks        []GenreBook        `gorm:"foreignKey:BookId"`
-	OrderBookDetails  []OrderBookDetail  `gorm:"foreignKey:BookId"`
-	Carts             []Cart             `gorm:"foreignKey:BookId"`
-	BookUserDetails   []BookUserDetail   `gorm:"foreignKey:BookId"`
+	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookPreviewImageBookId"`
+	Reviews           []Review           `gorm:"foreignKey:ReviewBookId"`
+	GenreBooks        []GenreBook        `gorm:"foreignKey:GenreBookBookId"`
+	OrderBookDetails  []OrderBookDetail  `gorm:"foreignKey:OrderBookDetailBookId"`
+	Carts             []Cart             `gorm:"foreignKey:CartBookId"`
+	BookUserDetails   []BookUserDetail   `gorm:"foreignKey:BookUserDetailBookId"`
 }
 
 type BookPreviewImage struct {
 	gorm.Model
 	BookPreviewImageUrl string `json:"preview_image_url" valid:"required~Please input preview image url"`
 
-	BookId *uint `json:"book_id" valid:"required~Please select book"`
-	Book   Book  `valid:"-"`
+	BookPreviewImageBookId *uint `json:"book_id" valid:"required~Please select book"`
+	Book                   Book  `gorm:"foreignKey:BookPreviewImageBookId"`
 }
 
 type BookUserDetail struct {
 	gorm.Model
 	BookUserDetailIsAvailable bool `gorm:"default:false" valid:"required~Please input book user detail is available"`
 
-	BookId *uint `valid:"required~Please input book id"`
-	Book   Book  `valid:"-"`
-	UserId *uint `valid:"required~Please input user id"`
-	User   User  `valid:"-"`
+	BookUserDetailBookId *uint `valid:"required~Please input book id"`
+	Book                 Book  `gorm:"foreignKey:BookUserDetailBookId"`
+	UserId               *uint `valid:"required~Please input user id"`
+	User                 User  `gorm:"foreignKey:UserId"`
 }

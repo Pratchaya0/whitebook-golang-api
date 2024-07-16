@@ -26,7 +26,7 @@ func TestCartValidateNotBlank(t *testing.T) {
 
 	t.Run("check [UserId] not blank", func(t *testing.T) {
 		cart := Cart{
-			BookId: &tmpId,
+			CartBookId: &tmpId,
 			// UserId: &tmpId,
 		}
 

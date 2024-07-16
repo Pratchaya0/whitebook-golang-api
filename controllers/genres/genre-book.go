@@ -29,7 +29,7 @@ func CreateGenreBook(c *gin.Context) {
 		return
 	}
 
-	if tx := entities.DB().Where("id = ?", genreBook.BookId).First(&book); tx.RowsAffected == 0 {
+	if tx := entities.DB().Where("id = ?", genreBook.GenreBookBookId).First(&book); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "book not found"})
 		return
 	}
