@@ -9,5 +9,5 @@ type Category struct {
 	CategoryName string `valid:"required~Please input category name"`
 	CategoryIcon string
 
-	Books []Book `gorm:"foreignKey:BookCategoryId"`
+	Books []Book `gorm:"foreignKey:BookCategoryId" valid:"-"`
 }

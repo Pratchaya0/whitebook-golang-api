@@ -17,7 +17,7 @@ func TestGenreValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(genre)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input genre name"))
 	})
 
 }

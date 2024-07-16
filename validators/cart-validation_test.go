@@ -21,7 +21,7 @@ func TestCartValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(cart)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input book id"))
 	})
 
 	t.Run("check [UserId] not blank", func(t *testing.T) {
@@ -33,7 +33,7 @@ func TestCartValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(cart)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input user id"))
 	})
 
 }

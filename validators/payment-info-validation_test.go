@@ -21,7 +21,7 @@ func TestPaymentInfoValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(paymentInfo)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input name"))
 	})
 
 	t.Run("check [PaymentInfoCode] not blank", func(t *testing.T) {
@@ -34,6 +34,6 @@ func TestPaymentInfoValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(paymentInfo)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input code"))
 	})
 }

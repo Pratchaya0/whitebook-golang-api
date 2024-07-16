@@ -10,7 +10,7 @@ type Review struct {
 	ReviewRating  int
 
 	UserId       *uint `valid:"required~Please input user id"`
-	User         User  `gorm:"foreignKey:UserId"`
+	User         User  `gorm:"foreignKey:UserId" valid:"-"`
 	ReviewBookId *uint `valid:"required~Please input book id"`
-	Book         Book  `gorm:"foreignKey:ReviewBookId"`
+	Book         Book  `gorm:"foreignKey:ReviewBookId" valid:"-"`
 }

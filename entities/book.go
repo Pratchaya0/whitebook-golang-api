@@ -16,14 +16,14 @@ type Book struct {
 	BookUrl           string `json:"url" valid:"required~Please input book"`
 
 	BookCategoryId *uint    `json:"category_id" valid:"required~Please select category"`
-	Category       Category `gorm:"foreignKey:BookCategoryId"`
+	Category       Category `gorm:"foreignKey:BookCategoryId" valid:"-"`
 
-	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookPreviewImageBookId"`
-	Reviews           []Review           `gorm:"foreignKey:ReviewBookId"`
-	GenreBooks        []GenreBook        `gorm:"foreignKey:GenreBookBookId"`
-	OrderBookDetails  []OrderBookDetail  `gorm:"foreignKey:OrderBookDetailBookId"`
-	Carts             []Cart             `gorm:"foreignKey:CartBookId"`
-	BookUserDetails   []BookUserDetail   `gorm:"foreignKey:BookUserDetailBookId"`
+	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookPreviewImageBookId" valid:"-"`
+	Reviews           []Review           `gorm:"foreignKey:ReviewBookId" valid:"-"`
+	GenreBooks        []GenreBook        `gorm:"foreignKey:GenreBookBookId" valid:"-"`
+	OrderBookDetails  []OrderBookDetail  `gorm:"foreignKey:OrderBookDetailBookId" valid:"-"`
+	Carts             []Cart             `gorm:"foreignKey:CartBookId" valid:"-"`
+	BookUserDetails   []BookUserDetail   `gorm:"foreignKey:BookUserDetailBookId" valid:"-"`
 }
 
 type BookPreviewImage struct {
@@ -31,7 +31,7 @@ type BookPreviewImage struct {
 	BookPreviewImageUrl string `json:"preview_image_url" valid:"required~Please input preview image url"`
 
 	BookPreviewImageBookId *uint `json:"book_id" valid:"required~Please select book"`
-	Book                   Book  `gorm:"foreignKey:BookPreviewImageBookId"`
+	Book                   Book  `gorm:"foreignKey:BookPreviewImageBookId" valid:"-"`
 }
 
 type BookUserDetail struct {
@@ -39,7 +39,7 @@ type BookUserDetail struct {
 	BookUserDetailIsAvailable bool `gorm:"default:false" valid:"required~Please input book user detail is available"`
 
 	BookUserDetailBookId *uint `valid:"required~Please input book id"`
-	Book                 Book  `gorm:"foreignKey:BookUserDetailBookId"`
+	Book                 Book  `gorm:"foreignKey:BookUserDetailBookId" valid:"-"`
 	UserId               *uint `valid:"required~Please input user id"`
-	User                 User  `gorm:"foreignKey:UserId"`
+	User                 User  `gorm:"foreignKey:UserId" valid:"-"`
 }

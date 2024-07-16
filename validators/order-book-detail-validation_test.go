@@ -21,7 +21,7 @@ func TestOrderBookDetailValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(orderBookDetail)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input order id"))
 	})
 
 	t.Run("check [BookId] not blank", func(t *testing.T) {
@@ -33,6 +33,6 @@ func TestOrderBookDetailValidateNotBlank(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(orderBookDetail)
 		g.Expect(ok).To(BeFalse())
 		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal(""))
+		g.Expect(err.Error()).To(Equal("Please input book id"))
 	})
 }

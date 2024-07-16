@@ -8,5 +8,5 @@ type PaymentInfo struct {
 	PaymentInfoCode     string `valid:"required~Please input code"`
 	PaymentInfoImageUrl string
 
-	Orders []Order `gorm:"foreignKey:PaymentInfoId"`
+	Orders []Order `gorm:"foreignKey:PaymentInfoId" valid:"-"`
 }
