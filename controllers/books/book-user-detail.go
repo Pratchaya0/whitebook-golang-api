@@ -2,7 +2,6 @@ package books
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -39,7 +38,6 @@ func CreateBookUserDetail(c *gin.Context) {
 		BookUserDetailIsAvailable: bookUserDetail.BookUserDetailIsAvailable,
 		Book:                      book,
 		User:                      user,
-		BookUserDetailCreateDate:  time.Now(),
 	}
 
 	if err := entities.DB().Create(&bookUserDetailCreate).Error; err != nil {
@@ -104,7 +102,6 @@ func UpdateBookUserDetail(c *gin.Context) {
 		BookUserDetailIsAvailable: bookUserDetail.BookUserDetailIsAvailable,
 		Book:                      book,
 		User:                      user,
-		BookUserDetailUpdateDate:  time.Now(),
 	}
 
 	if err := entities.DB().Save(&bookUserDetailUpdate).Error; err != nil {

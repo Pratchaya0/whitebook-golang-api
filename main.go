@@ -20,7 +20,7 @@ import (
 const PORT = "8080"
 
 func main() {
-	entities.SetupDatabase()
+	entities.SetupDatabaseII()
 
 	r := gin.Default()
 

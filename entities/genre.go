@@ -1,17 +1,12 @@
 package entities
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
 type Genre struct {
 	gorm.Model
-	GenreName       string `valid:"required~Please input genre name"`
-	GenreIsActive   bool   `gorm:"default:false"` // Form soft delete
-	GenreCreateDate time.Time
-	GenreUpdateDate time.Time
+	GenreName string `valid:"required~Please input genre name"`
 
 	GenreBooks []GenreBook `gorm:"foreignKey:GenreId"`
 }

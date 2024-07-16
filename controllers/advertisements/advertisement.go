@@ -2,7 +2,6 @@ package advertisements
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -28,7 +27,6 @@ func CreateAdvertisement(c *gin.Context) {
 		AdvertisementDescription: advertisement.AdvertisementDescription,
 		AdvertisementHighlight:   advertisement.AdvertisementHighlight,
 		AdvertisementImageUrl:    advertisement.AdvertisementImageUrl,
-		AdvertisementCreateDate:  time.Now(),
 	}
 
 	if err := entities.DB().Create(&advertisementCreate).Error; err != nil {

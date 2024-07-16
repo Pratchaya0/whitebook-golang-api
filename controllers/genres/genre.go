@@ -2,7 +2,6 @@ package genres
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -24,8 +23,7 @@ func CreateGenre(c *gin.Context) {
 	}
 
 	genreCreate := entities.Genre{
-		GenreName:       genre.GenreName,
-		GenreCreateDate: time.Now(),
+		GenreName: genre.GenreName,
 	}
 
 	if err := entities.DB().Create(&genreCreate).Error; err != nil {

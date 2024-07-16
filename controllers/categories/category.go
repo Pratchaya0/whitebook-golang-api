@@ -2,7 +2,6 @@ package categories
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -24,9 +23,8 @@ func CreateCategory(c *gin.Context) {
 	}
 
 	categoryCreate := entities.Category{
-		CategoryName:       category.CategoryName,
-		CategoryIcon:       category.CategoryIcon,
-		CategoryCreateDate: time.Now(),
+		CategoryName: category.CategoryName,
+		CategoryIcon: category.CategoryIcon,
 	}
 
 	if err := entities.DB().Create(&categoryCreate).Error; err != nil {

@@ -2,7 +2,6 @@ package books
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -38,7 +37,6 @@ func CreateBook(c *gin.Context) {
 		BookIsOnSale:      book.BookIsOnSale,
 		BookCoverImageUrl: book.BookCoverImageUrl,
 		BookUrl:           book.BookUrl,
-		BookCreateDate:    time.Now(),
 		Category:          category,
 	}
 
@@ -103,7 +101,6 @@ func UpdateBook(c *gin.Context) {
 		BookIsOnSale:      book.BookIsOnSale,
 		BookCoverImageUrl: book.BookCoverImageUrl,
 		BookUrl:           book.BookUrl,
-		BookUpdateDate:    time.Now(),
 		Category:          category,
 	}
 

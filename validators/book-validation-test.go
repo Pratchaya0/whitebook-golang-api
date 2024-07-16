@@ -2,7 +2,6 @@ package validators
 
 import (
 	"testing"
-	"time"
 
 	. "github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -23,9 +22,6 @@ func TestBookValidateNotBlank(t *testing.T) {
 			BookIsOnSale:      true,
 			BookCoverImageUrl: "BookCoverImageUrl",
 			BookUrl:           "BookUrl",
-			BookIsActive:      true,
-			BookCreateDate:    time.Now(),
-			BookUpdateDate:    time.Now(),
 
 			BookCategoryId: &bookCategoryId,
 		}
@@ -46,9 +42,6 @@ func TestBookValidateNotBlank(t *testing.T) {
 			BookIsOnSale:      true,
 			BookCoverImageUrl: "BookCoverImageUrl",
 			BookUrl:           "BookUrl",
-			BookIsActive:      true,
-			BookCreateDate:    time.Now(),
-			BookUpdateDate:    time.Now(),
 
 			BookCategoryId: &bookCategoryId,
 		}
@@ -69,9 +62,6 @@ func TestBookValidateNotBlank(t *testing.T) {
 			BookIsOnSale:      true,
 			BookCoverImageUrl: "BookCoverImageUrl",
 			BookUrl:           "BookUrl",
-			BookIsActive:      true,
-			BookCreateDate:    time.Now(),
-			BookUpdateDate:    time.Now(),
 
 			BookCategoryId: &bookCategoryId,
 		}
@@ -92,9 +82,6 @@ func TestBookValidateNotBlank(t *testing.T) {
 			BookIsOnSale:      true,
 			BookCoverImageUrl: "BookCoverImageUrl",
 			BookUrl:           "BookUrl",
-			BookIsActive:      true,
-			BookCreateDate:    time.Now(),
-			BookUpdateDate:    time.Now(),
 
 			BookCategoryId: &bookCategoryId,
 		}
@@ -115,9 +102,6 @@ func TestBookValidateNotBlank(t *testing.T) {
 			BookIsOnSale:      true,
 			BookCoverImageUrl: "BookCoverImageUrl",
 			BookUrl:           "BookUrl",
-			BookIsActive:      true,
-			BookCreateDate:    time.Now(),
-			BookUpdateDate:    time.Now(),
 
 			BookCategoryId: &bookCategoryId,
 		}
@@ -138,9 +122,6 @@ func TestBookValidateNotBlank(t *testing.T) {
 			// BookIsOnSale:      true,
 			BookCoverImageUrl: "BookCoverImageUrl",
 			BookUrl:           "BookUrl",
-			BookIsActive:      true,
-			BookCreateDate:    time.Now(),
-			BookUpdateDate:    time.Now(),
 
 			BookCategoryId: &bookCategoryId,
 		}
@@ -160,10 +141,7 @@ func TestBookValidateNotBlank(t *testing.T) {
 			BookPublisher:   "BookPublisher",
 			BookIsOnSale:    true,
 			// BookCoverImageUrl: "BookCoverImageUrl",
-			BookUrl:        "BookUrl",
-			BookIsActive:   true,
-			BookCreateDate: time.Now(),
-			BookUpdateDate: time.Now(),
+			BookUrl: "BookUrl",
 
 			BookCategoryId: &bookCategoryId,
 		}
@@ -184,9 +162,6 @@ func TestBookValidateNotBlank(t *testing.T) {
 			BookIsOnSale:      true,
 			BookCoverImageUrl: "BookCoverImageUrl",
 			// BookUrl:           "BookUrl",
-			BookIsActive:   true,
-			BookCreateDate: time.Now(),
-			BookUpdateDate: time.Now(),
 
 			BookCategoryId: &bookCategoryId,
 		}
@@ -207,9 +182,6 @@ func TestBookValidateNotBlank(t *testing.T) {
 			BookIsOnSale:      true,
 			BookCoverImageUrl: "BookCoverImageUrl",
 			BookUrl:           "BookUrl",
-			BookIsActive:      true,
-			BookCreateDate:    time.Now(),
-			BookUpdateDate:    time.Now(),
 
 			// BookCategoryId: &bookCategoryId,
 		}

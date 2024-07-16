@@ -2,7 +2,6 @@ package reviews
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -36,11 +35,10 @@ func CreateReview(c *gin.Context) {
 	}
 
 	reviewCreate := entities.Review{
-		ReviewComment:    review.ReviewComment,
-		ReviewRating:     review.ReviewRating,
-		ReviewCreateDate: time.Now(),
-		User:             user,
-		Book:             book,
+		ReviewComment: review.ReviewComment,
+		ReviewRating:  review.ReviewRating,
+		User:          user,
+		Book:          book,
 	}
 
 	if err := entities.DB().Create(&reviewCreate).Error; err != nil {
@@ -107,11 +105,10 @@ func UpdateReview(c *gin.Context) {
 	}
 
 	reviewUpdate := entities.Review{
-		ReviewComment:    review.ReviewComment,
-		ReviewRating:     review.ReviewRating,
-		ReviewUpdateDate: time.Now(),
-		User:             user,
-		Book:             book,
+		ReviewComment: review.ReviewComment,
+		ReviewRating:  review.ReviewRating,
+		User:          user,
+		Book:          book,
 	}
 
 	if err := entities.DB().Save(&reviewUpdate).Error; err != nil {

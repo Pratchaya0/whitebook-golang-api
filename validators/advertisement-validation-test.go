@@ -2,7 +2,6 @@ package validators
 
 import (
 	"testing"
-	"time"
 
 	. "github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -18,9 +17,6 @@ func TestAdvertiseValidateNotBlank(t *testing.T) {
 			AdvertisementDescription: "AdvertisementDescription",
 			AdvertisementHighlight:   "AdvertisementHighlight",
 			AdvertisementImageUrl:    "AdvertisementImageUrl",
-			AdvertisementIsActive:    true,
-			AdvertisementCreateDate:  time.Now(),
-			AdvertisementUpdateDate:  time.Now(),
 		}
 
 		ok, err := govalidator.ValidateStruct(advertisement)
@@ -33,11 +29,8 @@ func TestAdvertiseValidateNotBlank(t *testing.T) {
 		advertisement := Advertisement{
 			AdvertisementTitle: "AdvertisementTitle",
 			// AdvertisementDescription: "AdvertisementDescription",
-			AdvertisementHighlight:  "AdvertisementHighlight",
-			AdvertisementImageUrl:   "AdvertisementImageUrl",
-			AdvertisementIsActive:   true,
-			AdvertisementCreateDate: time.Now(),
-			AdvertisementUpdateDate: time.Now(),
+			AdvertisementHighlight: "AdvertisementHighlight",
+			AdvertisementImageUrl:  "AdvertisementImageUrl",
 		}
 
 		ok, err := govalidator.ValidateStruct(advertisement)
@@ -51,10 +44,7 @@ func TestAdvertiseValidateNotBlank(t *testing.T) {
 			AdvertisementTitle:       "AdvertisementTitle",
 			AdvertisementDescription: "AdvertisementDescription",
 			// AdvertisementHighlight:  "AdvertisementHighlight",
-			AdvertisementImageUrl:   "AdvertisementImageUrl",
-			AdvertisementIsActive:   true,
-			AdvertisementCreateDate: time.Now(),
-			AdvertisementUpdateDate: time.Now(),
+			AdvertisementImageUrl: "AdvertisementImageUrl",
 		}
 
 		ok, err := govalidator.ValidateStruct(advertisement)
@@ -69,9 +59,6 @@ func TestAdvertiseValidateNotBlank(t *testing.T) {
 			AdvertisementDescription: "AdvertisementDescription",
 			AdvertisementHighlight:   "AdvertisementHighlight",
 			// AdvertisementImageUrl:    "AdvertisementImageUrl",
-			AdvertisementIsActive:   true,
-			AdvertisementCreateDate: time.Now(),
-			AdvertisementUpdateDate: time.Now(),
 		}
 
 		ok, err := govalidator.ValidateStruct(advertisement)

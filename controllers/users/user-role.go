@@ -2,7 +2,6 @@ package users
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/gin-gonic/gin"
@@ -17,8 +16,7 @@ func CreateUserRole(c *gin.Context) {
 	}
 
 	userRoleCreate := entities.UserRole{
-		UserRoleName:       userRole.UserRoleName,
-		UserRoleCreateDate: time.Now(),
+		UserRoleName: userRole.UserRoleName,
 	}
 
 	if err := entities.DB().Create(&userRoleCreate).Error; err != nil {

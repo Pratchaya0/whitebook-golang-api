@@ -2,7 +2,6 @@ package orders
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
@@ -39,7 +38,6 @@ func CreateOrder(c *gin.Context) {
 		OrderAmount:          order.OrderAmount,
 		OrderPaymentImageUrl: order.OrderPaymentImageUrl,
 		OrderIsPaid:          order.OrderIsPaid,
-		OrderCreateDate:      time.Now(),
 		PaymentInfo:          paymentInfo,
 		User:                 user,
 	}
@@ -111,7 +109,6 @@ func UpdateOrders(c *gin.Context) {
 		OrderAmount:          order.OrderAmount,
 		OrderPaymentImageUrl: order.OrderPaymentImageUrl,
 		OrderIsPaid:          order.OrderIsPaid,
-		OrderUpdateDate:      time.Now(),
 		PaymentInfo:          paymentInfo,
 		User:                 user,
 	}

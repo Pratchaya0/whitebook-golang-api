@@ -1,19 +1,14 @@
 package entities
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
 type User struct {
 	gorm.Model
-	UserName       string
-	UserEmail      string
-	UserPassword   string `json:"-"`
-	UserIsActive   bool   `gorm:"default:false"` // Form soft delete
-	UserCreateDate time.Time
-	UserUpdateDate time.Time
+	UserName     string
+	UserEmail    string
+	UserPassword string `json:"-"`
 
 	UserRoleId *uint
 	UserRole   UserRole
@@ -26,10 +21,7 @@ type User struct {
 
 type UserRole struct {
 	gorm.Model
-	UserRoleName       string
-	UserRoleIsActive   bool
-	UserRoleCreateDate time.Time
-	UserRoleUpdateDate time.Time
+	UserRoleName string
 
 	Users []User `gorm:"foreignKey:UserRoleId"`
 }
