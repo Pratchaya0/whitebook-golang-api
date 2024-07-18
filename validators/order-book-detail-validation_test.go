@@ -1,38 +1,38 @@
 package validators
 
-import (
-	"testing"
+// import (
+// 	"testing"
 
-	. "github.com/Pratchaya0/whitebook-golang-api/entities"
-	"github.com/asaskevich/govalidator"
-	. "github.com/onsi/gomega"
-)
+// 	. "github.com/Pratchaya0/whitebook-golang-api/entities"
+// 	"github.com/asaskevich/govalidator"
+// 	. "github.com/onsi/gomega"
+// )
 
-func TestOrderBookDetailValidateNotBlank(t *testing.T) {
-	g := NewGomegaWithT(t)
-	tmpId := uint(1)
+// func TestOrderBookDetailValidateNotBlank(t *testing.T) {
+// 	g := NewGomegaWithT(t)
+// 	tmpId := uint(1)
 
-	t.Run("check [OrderId] not blank", func(t *testing.T) {
-		orderBookDetail := OrderBookDetail{
-			// OrderId: &tmpId,
-			OrderBookDetailBookId: &tmpId,
-		}
+// 	t.Run("check [OrderId] not blank", func(t *testing.T) {
+// 		orderBookDetail := OrderBookDetail{
+// 			// OrderId: &tmpId,
+// 			OrderBookDetailBookId: &tmpId,
+// 		}
 
-		ok, err := govalidator.ValidateStruct(orderBookDetail)
-		g.Expect(ok).To(BeFalse())
-		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal("Please input order id"))
-	})
+// 		ok, err := govalidator.ValidateStruct(orderBookDetail)
+// 		g.Expect(ok).To(BeFalse())
+// 		g.Expect(err).To(HaveOccurred())
+// 		g.Expect(err.Error()).To(Equal("Please input order id"))
+// 	})
 
-	t.Run("check [BookId] not blank", func(t *testing.T) {
-		orderBookDetail := OrderBookDetail{
-			OrderId: &tmpId,
-			// BookId:  &tmpId,
-		}
+// 	t.Run("check [BookId] not blank", func(t *testing.T) {
+// 		orderBookDetail := OrderBookDetail{
+// 			OrderId: &tmpId,
+// 			// BookId:  &tmpId,
+// 		}
 
-		ok, err := govalidator.ValidateStruct(orderBookDetail)
-		g.Expect(ok).To(BeFalse())
-		g.Expect(err).To(HaveOccurred())
-		g.Expect(err.Error()).To(Equal("Please input book id"))
-	})
-}
+// 		ok, err := govalidator.ValidateStruct(orderBookDetail)
+// 		g.Expect(ok).To(BeFalse())
+// 		g.Expect(err).To(HaveOccurred())
+// 		g.Expect(err.Error()).To(Equal("Please input book id"))
+// 	})
+// }

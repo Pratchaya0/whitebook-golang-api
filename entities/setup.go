@@ -31,24 +31,16 @@ func SetupDatabase() {
 	//Migrate the schema
 	database.AutoMigrate(
 		// Add schema
-		&Advertisement{},
 		&User{},
 		&UserRole{},
+		&Category{},
 		&Book{},
 		&BookPreviewImage{},
-		&BookUserDetail{},
 		&Cart{},
-		&Category{},
 		&Genre{},
-		&GenreBook{},
+		&PaymentMethod{},
 		&Order{},
-		&OrderBookDetail{},
-		&PaymentInfo{},
 		&Review{},
-		&VerificationToken{},
-		&PasswordResetToken{},
-		&TwoFactorToken{},
-		&WebInfo{},
 	)
 
 	db = database
@@ -69,24 +61,16 @@ func SetupDatabaseII() {
 	//Migrate the schema
 	database.AutoMigrate(
 		// Add schema
-		&Advertisement{},
 		&User{},
 		&UserRole{},
+		&Category{},
 		&Book{},
 		&BookPreviewImage{},
-		&BookUserDetail{},
 		&Cart{},
-		&Category{},
 		&Genre{},
-		&GenreBook{},
+		&PaymentMethod{},
 		&Order{},
-		&OrderBookDetail{},
-		&PaymentInfo{},
 		&Review{},
-		&VerificationToken{},
-		&PasswordResetToken{},
-		&TwoFactorToken{},
-		&WebInfo{},
 	)
 
 	// Assign to global variable
