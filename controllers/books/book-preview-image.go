@@ -8,6 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book-preview-image/create [post]
 func CreateBookPreviewImage(c *gin.Context) {
 	var bookPreviewImage entities.BookPreviewImage
 	var book entities.Book
@@ -41,6 +47,12 @@ func CreateBookPreviewImage(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"data": bookPreviewImageCreate})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book-preview-image/{bookPreviewImageId} [get]
 func GetBookPreviewImage(c *gin.Context) {
 	bookPreviewImageId := c.Param("bookPreviewImageId")
 
@@ -54,6 +66,12 @@ func GetBookPreviewImage(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": bookPreviewImage})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book-preview-images [get]
 func GetListBookPreviewImages(c *gin.Context) {
 	var bookPreviewImages []entities.BookPreviewImage
 
@@ -65,6 +83,12 @@ func GetListBookPreviewImages(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": bookPreviewImages})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book-preview-image/update [patch]
 func UpdateBookPreviewImage(c *gin.Context) {
 	var bookPreviewImage entities.BookPreviewImage
 
@@ -92,6 +116,12 @@ func UpdateBookPreviewImage(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": bookPreviewImage})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book-preview-image/delete/{bookPreviewImageId} [delete]
 func DeleteBookPreviewImage(c *gin.Context) {
 	bookPreviewImageId := c.Param("bookPreviewImageId")
 

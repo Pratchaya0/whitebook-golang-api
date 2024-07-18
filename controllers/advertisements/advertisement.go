@@ -3,11 +3,18 @@ package advertisements
 import (
 	"net/http"
 
+	"github.com/Pratchaya0/whitebook-golang-api/dtos/responses"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /advertisement/create [post]
 func CreateAdvertisement(c *gin.Context) {
 	var advertisement entities.Advertisement
 
@@ -34,9 +41,21 @@ func CreateAdvertisement(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"data": advertisement})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   advertisement,
+	}
+
+	c.JSON(http.StatusCreated, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /advertisement/{advertisementsId} [get]
 func GetAdvertisement(c *gin.Context) {
 	advertisementId := c.Param("advertisementsId")
 
@@ -50,6 +69,12 @@ func GetAdvertisement(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": advertisement})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /advertisements [get]
 func GetListAdvertisements(c *gin.Context) {
 	var advertisements []entities.Advertisement
 
@@ -61,6 +86,12 @@ func GetListAdvertisements(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": advertisements})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /advertisement/update [patch]
 func UpdateAdvertisement(c *gin.Context) {
 	var advertisement entities.Advertisement
 
@@ -88,6 +119,12 @@ func UpdateAdvertisement(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": advertisement})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /advertisement/delete/{advertisementsId} [delete]
 func DeleteAdvertisement(c *gin.Context) {
 	advertisementId := c.Param("advertisementId")
 

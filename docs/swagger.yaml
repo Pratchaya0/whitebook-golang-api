@@ -14,7 +14,187 @@ info:
   title: Documenting Whitebook API
   version: "1"
 paths:
-  /book:
+  /advertisement/{advertisementsId}:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /advertisement/create:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /advertisement/delete/{advertisementsId}:
+    delete:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /advertisement/update:
+    patch:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /advertisements:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-preview-image/{bookPreviewImageId}:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-preview-image/create:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-preview-image/delete/{bookPreviewImageId}:
+    delete:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-preview-image/update:
+    patch:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-preview-images:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-user-detail/{bookUserDetailId}:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-user-detail/create:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-user-detail/delete/{bookUserDetailId}:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-user-detail/update:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book-user-details:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /book/{bookId}:
     get:
       description: '-'
       produces:
@@ -69,6 +249,126 @@ paths:
   /books:
     get:
       description: get string by ID
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /cart/{cartId}:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /cart/create:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /cart/delete/{cartId}:
+    delete:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /cart/update:
+    patch:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /carts:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /categories:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /category/{categoryId}:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /category/create:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /category/delete/{categoryId}:
+    delete:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: Get a list of books in the the store
+  /category/update:
+    patch:
       produces:
       - application/json
       responses:

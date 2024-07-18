@@ -68,7 +68,7 @@ func CreateBook(c *gin.Context) {
 // @Security bearerToken
 // @Produce  json
 // @Success 200 {object} responses.Response{} "ok"
-// @Router /book [get]
+// @Router /book/{bookId} [get]
 func GetBook(c *gin.Context) {
 	bookId := c.Param("bookId")
 
@@ -171,7 +171,7 @@ func UpdateBook(c *gin.Context) {
 // @Security bearerToken
 // @Produce  json
 // @Success 200 {object} responses.Response{} "ok"
-// @Router /book/delete [delete]
+// @Router /book/delete/{bookId} [delete]
 func DeleteBook(c *gin.Context) {
 	bookId := c.Param("bookId")
 

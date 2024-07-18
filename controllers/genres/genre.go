@@ -3,11 +3,18 @@ package genres
 import (
 	"net/http"
 
+	"github.com/Pratchaya0/whitebook-golang-api/dtos/responses"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get a list of books in the the store
+// @Tag Genre
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /genre/create [post]
 func CreateGenre(c *gin.Context) {
 	var genre entities.Genre
 
@@ -31,9 +38,21 @@ func CreateGenre(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"data": genreCreate})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   genreCreate,
+	}
+
+	c.JSON(http.StatusCreated, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /genre [post]
 func GetGenre(c *gin.Context) {
 	genreId := c.Param("genreId")
 
@@ -44,9 +63,21 @@ func GetGenre(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": genre})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   genre,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /genres [post]
 func GetListGenres(c *gin.Context) {
 	var genres []entities.Genre
 
@@ -55,9 +86,21 @@ func GetListGenres(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": genres})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   genres,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /genre/update [post]
 func UpdateGenre(c *gin.Context) {
 	var genre entities.Genre
 
@@ -82,9 +125,21 @@ func UpdateGenre(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": genre})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   genre,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /genre/delete/{genreId} [post]
 func DeleteGenre(c *gin.Context) {
 	genreId := c.Param("genreId")
 
@@ -93,5 +148,11 @@ func DeleteGenre(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": genreId})
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   genreId,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
 }

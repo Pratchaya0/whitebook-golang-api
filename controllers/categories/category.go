@@ -8,6 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get a list of books in the the store
+// @Tag Category
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /category/create [post]
 func CreateCategory(c *gin.Context) {
 	var category entities.Category
 
@@ -35,6 +41,12 @@ func CreateCategory(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"data": categoryCreate})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag BookPreviewImages
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /category/{categoryId} [get]
 func GetCategory(c *gin.Context) {
 	categoryId := c.Param("categoryId")
 
@@ -48,6 +60,12 @@ func GetCategory(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": category})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag Category
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /categories [get]
 func GetListCategories(c *gin.Context) {
 	var categories []entities.Category
 
@@ -59,6 +77,12 @@ func GetListCategories(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": categories})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag Category
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /category/update [patch]
 func UpdateCategory(c *gin.Context) {
 	var category entities.Category
 
@@ -86,6 +110,12 @@ func UpdateCategory(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": category})
 }
 
+// @Summary Get a list of books in the the store
+// @Tag Category
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /category/delete/{categoryId} [delete]
 func DeleteCategory(c *gin.Context) {
 	categoryId := c.Param("categoryId")
 
