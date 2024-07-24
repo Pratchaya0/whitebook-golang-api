@@ -1,21 +1,11 @@
 package entities
 
-import (
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
 type Genre struct {
 	gorm.Model
-	GenreName string `valid:"required~Please input genre name"`
+	Name        string
+	Description string
 
-	GenreBooks []GenreBook `gorm:"foreignKey:GenreId"`
-}
-
-type GenreBook struct {
-	gorm.Model
-
-	GenreId         *uint `valid:"required~Please input genre id"`
-	Genre           Genre `gorm:"foreignKey:GenreId" valid:"-"`
-	GenreBookBookId *uint `valid:"required~Please input book id"`
-	Book            Book  `gorm:"foreignKey:GenreBookBookId" valid:"-"`
+	Books []Book `gorm:"many2many:book_genre;"`
 }

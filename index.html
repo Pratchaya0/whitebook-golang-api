@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Multiple Files with Progress</title>
+</head>
+<body>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="files" id="files" multiple>
+        <input type="submit" value="Upload">
+    </form>
+    <progress id="progressBar" value="0" max="100" style="width: 100%;"></progress>
+    <div id="status"></div>
+    <script>
+        document.getElementById("uploadForm").onsubmit = function(event) {
+            event.preventDefault();
+            var files = document.getElementById("files").files;
+            var formData = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                formData.append("files", files[i]);
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/upload", true);
+
+            xhr.upload.onprogress = function(event) {
+                if (event.lengthComputable) {
+                    var percentComplete = (event.loaded / event.total) * 100;
+                    document.getElementById("progressBar").value = percentComplete;
+                }
+            };
+
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    document.getElementById("status").innerText = "Files uploaded successfully!";
+                } else {
+                    document.getElementById("status").innerText = "Error uploading files.";
+                }
+            };
+
+            xhr.send(formData);
+        };
+    </script>
+</body>
+</html>

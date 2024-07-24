@@ -1,13 +1,11 @@
 package entities
 
-import (
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
 type Category struct {
 	gorm.Model
-	CategoryName string `valid:"required~Please input category name"`
-	CategoryIcon string
+	Name        string
+	Description string
 
-	Books []Book `gorm:"foreignKey:BookCategoryId" valid:"-"`
+	Books []Book `gorm:"foreignKey:CategoryID;"`
 }
