@@ -9,12 +9,17 @@ type Book struct {
 	Price       float64
 	CategoryID  uint
 
-	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookID"`
-	Reviews           []Review           `gorm:"foreignKey:BookID"`
+	// File
+	CoverImage string
+	BookPdf    string
+	BookEpub   string
 
 	Genres []Genre `gorm:"many2many:book_genre;"`
-	Orders []Order `gorm:"many2many:book_order;"`
-	Carts  []Cart  `gorm:"many2many:book_cart;"`
+
+	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookID"`
+	Reviews           []Review           `gorm:"foreignKey:BookID"`
+	Orders            []Order            `gorm:"many2many:book_order;"`
+	Carts             []Cart             `gorm:"many2many:book_cart;"`
 }
 
 type BookPreviewImage struct {

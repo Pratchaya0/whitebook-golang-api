@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Book</title>
+</head>
+<body>
+    <form action="http://localhost:8080/create-book" method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Book Name">
+        <input type="text" name="description" placeholder="Description">
+        <input type="number" name="price" placeholder="Price">
+        <input type="number" name="category_id" placeholder="Category ID">
+        <input type="file" name="book_preview_images" multiple>
+        <input type="text" name="genres" placeholder="Genres (comma-separated)">
+        <input type="submit" value="Upload Book">
+    </form>
+</body>
+</html>

@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/Pratchaya0/whitebook-golang-api/docs"
-	"github.com/Pratchaya0/whitebook-golang-api/entities"
-	"github.com/gin-gonic/gin"
+	// "github.com/Pratchaya0/whitebook-golang-api/docs"
 
-	swaggerfiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
+
+	"github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/Pratchaya0/whitebook-golang-api/new-controllers/book"
+	"github.com/gin-gonic/gin"
 )
 
 // @BasePath /
@@ -24,9 +25,33 @@ const PORT = "8080"
 func main() {
 	entities.SetupDatabaseII()
 
+	// previewImageCreate := []entities.BookPreviewImage{
+	// 	{
+	// 		PageNumber: 1,
+	// 		ImageLink:  "Link image 1",
+	// 	},
+	// 	{
+	// 		PageNumber: 2,
+	// 		ImageLink:  "Link image 2",
+	// 	},
+	// }
+
+	// params := requests.BookCreateDto{
+	// 	Name:              "Test",
+	// 	Description:       "Test",
+	// 	Price:             123.00,
+	// 	CategoryID:        1,
+	// 	BookPreviewImages: []uint{1, 2},
+	// 	Genres:            []uint{1, 2},
+	// }
+
+	// book.CreateBookPreviewImageTest(previewImageCreate)
+
+	// book.CreateBookTest(params)
+
 	r := gin.Default()
 
-	docs.SwaggerInfo.BasePath = "/"
+	// docs.SwaggerInfo.BasePath = "/"
 
 	r.Use(CORSMiddleware())
 
@@ -137,13 +162,20 @@ func main() {
 	// 	}
 	// }
 
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	// // Sign Up User Route
 	// r.POST("/signup", controllers.SignUp)
 	// // login User Route
 	// r.POST("/login", controllers.Login)
 	// Run the server go run main.go
+	r.GET("/hello", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, "OK")
+	})
+
+	r.GET("/list", book.GetListBooks)
+	r.POST("/createBook", book.CreateBook)
+
 	r.Run() // "localhost: " + PORT
 }
 
