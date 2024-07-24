@@ -275,3 +275,54 @@ func CreateBook(c *gin.Context) {
 
 	c.JSON(http.StatusOK, webResponse)
 }
+
+// @Summary Get a list of book preview images
+// @Tag Book
+// @Param bookUpdateDto query requests.BookUpdateDto true "BookUpdateDto"
+// @Security bearerToken
+// @Produce json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /bookPreviewImages/{id} [get]
+func UpdateBook(c *gin.Context) {
+	var bookUpdateDto requests.BookUpdateDto
+	var book entities.Book
+	var genres []entities.Genre
+
+	if err := c.ShouldBind(&bookUpdateDto); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// check book is exist?
+	if tx := entities.DB().Where("id = ?", bookUpdateDto.ID).First(&book); tx.RowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": fmt.Sprintf("Book [id: %d] not found.", bookUpdateDto.ID)})
+		return
+	}
+
+	// check genres is exist?
+	if tx := entities.DB().Where("id IN ?", bookUpdateDto.Genres).First(&genres); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("Genres [id: %+v] not found.", bookUpdateDto.Genres)})
+		return
+	}
+
+	book = entities.Book{
+		Name:        bookUpdateDto.Name,
+		Description: bookUpdateDto.Description,
+		Price:       bookUpdateDto.Price,
+		CategoryID:  bookUpdateDto.CategoryID,
+		Genres:      genres,
+	}
+
+	if err := entities.DB().Save(&book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	webResponse := responses.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   book,
+	}
+
+	c.JSON(http.StatusOK, webResponse)
+}
