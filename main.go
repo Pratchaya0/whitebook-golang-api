@@ -5,8 +5,10 @@ import (
 
 	"net/http"
 
+	"github.com/Pratchaya0/whitebook-golang-api/controllers/book"
+	"github.com/Pratchaya0/whitebook-golang-api/controllers/category"
+	"github.com/Pratchaya0/whitebook-golang-api/controllers/genre"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
-	"github.com/Pratchaya0/whitebook-golang-api/new-controllers/book"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,30 +26,6 @@ const PORT = "8080"
 
 func main() {
 	entities.SetupDatabaseII()
-
-	// previewImageCreate := []entities.BookPreviewImage{
-	// 	{
-	// 		PageNumber: 1,
-	// 		ImageLink:  "Link image 1",
-	// 	},
-	// 	{
-	// 		PageNumber: 2,
-	// 		ImageLink:  "Link image 2",
-	// 	},
-	// }
-
-	// params := requests.BookCreateDto{
-	// 	Name:              "Test",
-	// 	Description:       "Test",
-	// 	Price:             123.00,
-	// 	CategoryID:        1,
-	// 	BookPreviewImages: []uint{1, 2},
-	// 	Genres:            []uint{1, 2},
-	// }
-
-	// book.CreateBookPreviewImageTest(previewImageCreate)
-
-	// book.CreateBookTest(params)
 
 	r := gin.Default()
 
@@ -173,8 +151,23 @@ func main() {
 		ctx.JSON(http.StatusOK, "OK")
 	})
 
-	r.GET("/list", book.GetListBooks)
-	r.POST("/createBook", book.CreateBook)
+	r.GET("/books", book.GetListBooks)
+	r.GET("/book/:id", book.GetBook)
+	r.POST("/book/create", book.CreateBook)
+	r.PATCH("/book/update", book.UpdateBook)
+	r.DELETE("/book/:id/delete", book.DeleteBook)
+
+	r.GET("/categories", category.GetListCategories)
+	r.GET("/category/:id", category.GetCategory)
+	r.POST("/category/create", category.CreateCategory)
+	r.PATCH("/category/update", category.UpdateCategory)
+	r.DELETE("/category/:id/delete", category.DeleteCategory)
+
+	r.GET("/genres", genre.GetListGenres)
+	r.GET("/genre/:id", genre.GetGenre)
+	r.POST("/genre/create", genre.CreateGenre)
+	r.PATCH("/genre/update", genre.UpdateGenre)
+	r.DELETE("/genre/:id/delete", genre.DeleteGenre)
 
 	r.Run() // "localhost: " + PORT
 }

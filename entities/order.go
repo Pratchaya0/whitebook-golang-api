@@ -1,6 +1,8 @@
 package entities
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Order struct {
 	gorm.Model
@@ -8,8 +10,9 @@ type Order struct {
 	Amount    float64
 	SlipImage string
 
+	UserID          uint // `gorm:"not null"`
 	PaymentMethodID uint
-	UserID          uint
 
-	Books []Book `gorm:"many2many:book_order"`
+	User  User       `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Items []CartItem `gorm:"many2many:order_items;"`
 }

@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/Pratchaya0/whitebook-golang-api/dtos/requests"
-	"github.com/Pratchaya0/whitebook-golang-api/dtos/responses"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/Pratchaya0/whitebook-golang-api/helpers"
 	"github.com/gin-gonic/gin"
@@ -43,13 +42,13 @@ func handleUploadBookCoverImage(files []*multipart.FileHeader, uploadDir string,
 }
 
 // HandleUploadBookPreviewImage validates and saves uploaded Image files
-func handleUploadBookPreviewImage(files []*multipart.FileHeader, uploadDir string, bookId uint, bookName string) string {
-	// var bookPreviewImages []entities.BookPreviewImage
+func handleUploadBookPreviewImage(files []*multipart.FileHeader, uploadDir string, bookId uint, bookName string) ([]entities.BookPreviewImage, string) {
+	var bookPreviewImages []entities.BookPreviewImage
 
 	// validate Image file
 	for _, file := range files {
 		if !helpers.ValidateFileType(file, "image") {
-			return fmt.Sprintf("File name '%s' are not image type.", file.Filename)
+			return nil, fmt.Sprintf("File name '%s' are not image type.", file.Filename)
 		}
 	}
 
@@ -70,13 +69,13 @@ func handleUploadBookPreviewImage(files []*multipart.FileHeader, uploadDir strin
 		}
 
 		if err := entities.DB().Create(&bookPreviewImageCreate).Error; err != nil {
-			return "Cannot create book preview image."
+			return nil, "Cannot create book preview image."
 		}
 
-		// bookPreviewImages = append(bookPreviewImages, bookPreviewImageCreate)
+		bookPreviewImages = append(bookPreviewImages, bookPreviewImageCreate)
 	}
 
-	return "OK"
+	return bookPreviewImages, "OK"
 }
 
 // HandleUploadBookPdf validates and saves uploaded PDF files
@@ -141,20 +140,25 @@ func handleUploadBookEpub(files []*multipart.FileHeader, uploadDir string, bookN
 // @Success 200 {object} responses.Response{} "ok"
 // @Router /books [get]
 func GetListBooks(c *gin.Context) {
+	var paginationDto requests.PaginationDto
 	var books []entities.Book
 
-	if err := entities.DB().Preload("BookPreviewImages").Preload("Reviews").Preload("Genres").Preload("Orders").Preload("Carts").Raw("SELECT * FROM books").Find(&books).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.ShouldBind(&paginationDto); err != nil {
+		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
-	webResponse := responses.Response{
-		Code:   http.StatusOK,
-		Status: "OK",
-		Data:   books,
+	if err := entities.DB().Preload("BookPreviewImages").Preload("Reviews").Preload("Genres").Preload("Orders").Preload("Carts").Scopes(entities.Paginate(books, &paginationDto)).Find(&books).Error; err != nil {
+		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
+		return
 	}
 
-	c.JSON(http.StatusOK, webResponse)
+	if len(books) == 0 {
+		helpers.RespondWithJSON(c, http.StatusNotFound, "No data.", nil)
+		return
+	}
+
+	helpers.RespondWithJSON(c, http.StatusOK, "OK", books)
 }
 
 // @Summary Get a book by book id
@@ -162,23 +166,17 @@ func GetListBooks(c *gin.Context) {
 // @Security bearerToken
 // @Produce  json
 // @Success 200 {object} responses.Response{} "ok"
-// @Router /book/{bookId} [get]
+// @Router /book/{id} [get]
 func GetBook(c *gin.Context) {
-	bookId := c.Param("id")
+	id := c.Param("id")
 	var book entities.Book
 
-	if err := entities.DB().Preload("BookPreviewImages").Preload("Reviews").Preload("Genres").Preload("Orders").Preload("Carts").Where("id = ?", bookId).First(&book).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if tx := entities.DB().Preload("BookPreviewImages").Preload("Reviews").Preload("Genres").Preload("Orders").Preload("Carts").Where("id = ?", id).First(&book); tx.RowsAffected == 0 {
+		helpers.RespondWithJSON(c, http.StatusBadRequest, fmt.Sprintf("Book [id: %s] not found.", id), nil)
 		return
 	}
 
-	webResponse := responses.Response{
-		Code:   http.StatusOK,
-		Status: "OK",
-		Data:   book,
-	}
-
-	c.JSON(http.StatusOK, webResponse)
+	helpers.RespondWithJSON(c, http.StatusOK, "OK", book)
 }
 
 // @Summary Get a book by book id
@@ -189,36 +187,32 @@ func GetBook(c *gin.Context) {
 // @Success 200 {object} responses.Response{} "ok"
 // @Router /book/create [post]
 func CreateBook(c *gin.Context) {
-
-	fmt.Println("Create book started")
 	// api case
 	var bookDto requests.BookCreateDto
 	var category entities.Category
 	var genres []entities.Genre
 
 	if err := c.ShouldBind(&bookDto); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
-	fmt.Println("Parsed book DTO:", bookDto)
-
 	// check category is exist?
 	if tx := entities.DB().Where("id = ?", bookDto.CategoryID).First(&category); tx.RowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Category [id = " + strconv.Itoa(int(bookDto.CategoryID)) + "] not found."})
+		helpers.RespondWithJSON(c, http.StatusNotFound, "Category [id = "+strconv.Itoa(int(bookDto.CategoryID))+"] not found.", nil)
 		return
 	}
 
 	// check genres are exist?
 	if tx := entities.DB().Where("id IN ?", bookDto.Genres).Find(&genres); tx.RowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": fmt.Sprintf("Genres [id IN %+v ] not found.", bookDto.Genres)})
+		helpers.RespondWithJSON(c, http.StatusNotFound, fmt.Sprintf("Genres [id IN %+v ] not found.", bookDto.Genres), nil)
 		return
 	}
 
 	// Handle image uploads
 	form, err := c.MultipartForm()
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Error parsing form: " + err.Error()})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, "Error parsing form: "+err.Error(), nil)
 		return
 	}
 
@@ -229,18 +223,19 @@ func CreateBook(c *gin.Context) {
 
 	coverImageLink, status := handleUploadBookCoverImage(file_book_cover_image, "bookCoverImages", bookDto.Name)
 	if status != "OK" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": status})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, status, nil)
+		return
 	}
 
 	pdfLink, status := handleUploadBookPdf(file_book_pdf, "pdfs", bookDto.Name)
 	if status != "OK" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": status})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, status, nil)
 		return
 	}
 
 	epubLink, status := handleUploadBookEpub(file_book_epub, "epubs", bookDto.Name)
 	if status != "OK" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": status})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, status, nil)
 		return
 	}
 
@@ -258,22 +253,20 @@ func CreateBook(c *gin.Context) {
 	}
 
 	if err := entities.DB().Create(&bookCreate).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	}
-
-	// Upload + Create BookPreviewImage
-	if status := handleUploadBookPreviewImage(files_book_preview_images, "previewImages", bookCreate.ID, bookCreate.Name); status != "OK" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": status})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
-	webResponse := responses.Response{
-		Code:   http.StatusOK,
-		Status: "OK",
-		Data:   bookCreate,
+	// Upload + Create BookPreviewImage
+	book_preview_images, status := handleUploadBookPreviewImage(files_book_preview_images, "previewImages", bookCreate.ID, bookCreate.Name)
+	if status != "OK" {
+		helpers.RespondWithJSON(c, http.StatusBadRequest, status, nil)
+		return
 	}
 
-	c.JSON(http.StatusOK, webResponse)
+	bookCreate.BookPreviewImages = book_preview_images
+
+	helpers.RespondWithJSON(c, http.StatusOK, "OK", bookCreate)
 }
 
 // @Summary Get a list of book preview images
@@ -282,47 +275,64 @@ func CreateBook(c *gin.Context) {
 // @Security bearerToken
 // @Produce json
 // @Success 200 {object} responses.Response{} "ok"
-// @Router /bookPreviewImages/{id} [get]
+// @Router /book [patch]
 func UpdateBook(c *gin.Context) {
 	var bookUpdateDto requests.BookUpdateDto
 	var book entities.Book
 	var genres []entities.Genre
 
 	if err := c.ShouldBind(&bookUpdateDto); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
 	// check book is exist?
 	if tx := entities.DB().Where("id = ?", bookUpdateDto.ID).First(&book); tx.RowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": fmt.Sprintf("Book [id: %d] not found.", bookUpdateDto.ID)})
+		helpers.RespondWithJSON(c, http.StatusNotFound, fmt.Sprintf("Book [id: %d] not found.", bookUpdateDto.ID), nil)
 		return
 	}
 
 	// check genres is exist?
 	if tx := entities.DB().Where("id IN ?", bookUpdateDto.Genres).First(&genres); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("Genres [id: %+v] not found.", bookUpdateDto.Genres)})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, fmt.Sprintf("Genres [id: %+v] not found.", bookUpdateDto.Genres), nil)
 		return
 	}
 
-	book = entities.Book{
-		Name:        bookUpdateDto.Name,
-		Description: bookUpdateDto.Description,
-		Price:       bookUpdateDto.Price,
-		CategoryID:  bookUpdateDto.CategoryID,
-		Genres:      genres,
-	}
+	// TODO: Update file
+
+	book.Name = bookUpdateDto.Name
+	book.Description = bookUpdateDto.Description
+	book.Price = bookUpdateDto.Price
+	book.CategoryID = bookUpdateDto.CategoryID
+	book.Genres = genres
 
 	if err := entities.DB().Save(&book).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
-	webResponse := responses.Response{
-		Code:   http.StatusOK,
-		Status: "OK",
-		Data:   book,
+	helpers.RespondWithJSON(c, http.StatusOK, "OK", book)
+}
+
+// @Summary Get a book by book id
+// @Tag Book
+// @Security bearerToken
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /book/{id} [delete]
+func DeleteBook(c *gin.Context) {
+	id := c.Param("id")
+	var book entities.Book
+
+	if tx := entities.DB().Where("id = ?", id).First(&book); tx.RowsAffected == 0 {
+		helpers.RespondWithJSON(c, http.StatusNotFound, fmt.Sprintf("Book [id: %s] not found.", id), nil)
+		return
 	}
 
-	c.JSON(http.StatusOK, webResponse)
+	if err := entities.DB().Where("id = ?", id).Delete(&book).Error; err != nil {
+		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
+		return
+	}
+
+	helpers.RespondWithJSON(c, http.StatusOK, "OK", book)
 }

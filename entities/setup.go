@@ -2,7 +2,9 @@ package entities
 
 import (
 	"fmt"
+	"math"
 
+	"github.com/Pratchaya0/whitebook-golang-api/dtos/requests"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -62,11 +64,13 @@ func SetupDatabaseII() {
 	database.AutoMigrate(
 		// Add schema
 		&User{},
+		&CartItemStatus{},
 		&UserRole{},
 		&Category{},
 		&Book{},
 		&BookPreviewImage{},
 		&Cart{},
+		&CartItem{},
 		&Genre{},
 		&PaymentMethod{},
 		&Order{},
@@ -77,4 +81,17 @@ func SetupDatabaseII() {
 	db = database
 
 	fmt.Println("Database postgres migration completed!")
+}
+
+func Paginate(value interface{}, pagination *requests.PaginationDto) func(db *gorm.DB) *gorm.DB {
+	var totalRows int64
+	db.Model(value).Count(&totalRows)
+
+	pagination.TotalRows = totalRows
+	totalPages := int(math.Ceil(float64(totalRows) / float64(pagination.Limit)))
+	pagination.TotalPages = totalPages
+
+	return func(db *gorm.DB) *gorm.DB {
+		return db.Offset(pagination.GetOffset()).Limit(pagination.GetLimit()).Order(pagination.GetSort())
+	}
 }

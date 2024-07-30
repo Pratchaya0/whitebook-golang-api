@@ -19,7 +19,7 @@ type Book struct {
 	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookID"`
 	Reviews           []Review           `gorm:"foreignKey:BookID"`
 	Orders            []Order            `gorm:"many2many:book_order;"`
-	Carts             []Cart             `gorm:"many2many:book_cart;"`
+	CartItems         []CartItem         `gorm:"foreignKey:BookID"`
 }
 
 type BookPreviewImage struct {
