@@ -6,8 +6,13 @@ import (
 	"net/http"
 
 	"github.com/Pratchaya0/whitebook-golang-api/controllers/book"
+	"github.com/Pratchaya0/whitebook-golang-api/controllers/cart"
 	"github.com/Pratchaya0/whitebook-golang-api/controllers/category"
 	"github.com/Pratchaya0/whitebook-golang-api/controllers/genre"
+	"github.com/Pratchaya0/whitebook-golang-api/controllers/order"
+	"github.com/Pratchaya0/whitebook-golang-api/controllers/payment"
+	"github.com/Pratchaya0/whitebook-golang-api/controllers/review"
+	"github.com/Pratchaya0/whitebook-golang-api/controllers/user"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/gin-gonic/gin"
 )
@@ -168,6 +173,34 @@ func main() {
 	r.POST("/genre/create", genre.CreateGenre)
 	r.PATCH("/genre/update", genre.UpdateGenre)
 	r.DELETE("/genre/:id/delete", genre.DeleteGenre)
+
+	// --- ยังไม่ได้ test
+	r.POST("/order/create", order.CreateOrder)
+	r.PATCH("/order/update", order.UpdateOrder)
+
+	r.GET("/paymentMethods", payment.GetListPaymentMethods)
+	r.GET("/paymentMethod/:id", payment.GetPaymentMethod)
+	r.POST("/paymentMethod/create", payment.CreatePaymentMethod)
+	r.PATCH("/paymentMethod/update", payment.UpdatePaymentMethod)
+	r.DELETE("/paymentMethod/:id/delete", payment.DeletePaymentMethod)
+
+	r.GET("/reviews/:id/book", review.GetListReviewsByBookID)
+	r.GET("/reviews/:id/user", review.GetListReviewsByUserID)
+	r.GET("/review/:id", review.GetReview)
+	r.POST("/review/create", review.CreateReview)
+	r.PATCH("/review/update", review.UpdateReview)
+	r.DELETE("/review/delete", review.DeleteReview)
+
+	r.GET("/cart/list/:id", cart.GetListCartsByUserId)
+
+	r.GET("/users", user.GetListUsers)
+	r.GET("/user", user.GetUser)
+	r.PATCH("/user/update", user.UpdateUser)
+	r.DELETE("/user/delete", user.DeleteUser)
+
+	r.GET("/userRoles", user.GetListUserRoles)
+	r.GET("/userRole", user.GetUserRole)
+	r.POST("/userRole/create", user.CreateUserRole)
 
 	r.Run() // "localhost: " + PORT
 }

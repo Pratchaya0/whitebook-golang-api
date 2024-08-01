@@ -27,7 +27,7 @@ func GetListPaymentMethods(c *gin.Context) {
 	helpers.RespondWithJSON(c, http.StatusOK, "OK", paymentMethods)
 }
 
-func GetPaymentMethods(c *gin.Context) {
+func GetPaymentMethod(c *gin.Context) {
 	id := c.Param("id")
 	var paymentMethods entities.PaymentMethod
 

@@ -1,40 +1,52 @@
 package validators
 
-// import (
-// 	"testing"
+import (
+	"testing"
 
-// 	. "github.com/Pratchaya0/whitebook-golang-api/entities"
-// 	"github.com/asaskevich/govalidator"
-// 	. "github.com/onsi/gomega"
-// )
+	. "github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/asaskevich/govalidator"
+	. "github.com/onsi/gomega"
+)
 
-// func TestBookPreviewImageValidateNotBlank(t *testing.T) {
-// 	g := NewGomegaWithT(t)
-// 	tmpBookId := uint(1)
+func TestBookPreviewImageValidateNotBlank(t *testing.T) {
+	g := NewGomegaWithT(t)
 
-// 	t.Run("check [BookPreviewImageUrl] not blank", func(t *testing.T) {
-// 		bookPreviewImage := BookPreviewImage{
-// 			BookPreviewImageUrl:    "BookPreviewImageUrl",
-// 			BookPreviewImageBookId: &tmpBookId,
-// 		}
+	t.Run("Check [PageNumber] not blank.", func(t *testing.T) {
+		bookPreviewImage := BookPreviewImage{
+			// PageNumber: TEMP_UINT,
+			ImageLink: TEMP_LINK,
+			BookID:    TEMP_UINT,
+		}
 
-// 		// TODO: loop test 3 case blank
+		ok, err := govalidator.ValidateStruct(bookPreviewImage)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("PageNumber is required."))
+	})
 
-// 		ok, err := govalidator.ValidateStruct(bookPreviewImage)
-// 		g.Expect(ok).To(BeTrue())
-// 		g.Expect(err).To(BeNil())
-// 		// g.Expect(err.Error()).To(Equal(""))
-// 	})
+	t.Run("Check [ImageLink] not blank.", func(t *testing.T) {
+		bookPreviewImage := BookPreviewImage{
+			PageNumber: TEMP_UINT,
+			// ImageLink:  TEMP_LINK,
+			BookID: TEMP_UINT,
+		}
 
-// 	t.Run("check [BookId] not blank", func(t *testing.T) {
-// 		bookPreviewImage := BookPreviewImage{
-// 			BookPreviewImageUrl: "BookPreviewImageUrl",
-// 			// BookId:              &tmpBookId,
-// 		}
+		ok, err := govalidator.ValidateStruct(bookPreviewImage)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("ImageLink is required."))
+	})
 
-// 		ok, err := govalidator.ValidateStruct(bookPreviewImage)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please select book"))
-// 	})
-// }
+	t.Run("Check [BookID] not blank.", func(t *testing.T) {
+		bookPreviewImage := BookPreviewImage{
+			PageNumber: TEMP_UINT,
+			ImageLink:  TEMP_LINK,
+			// BookID:     TEMP_UINT,
+		}
+
+		ok, err := govalidator.ValidateStruct(bookPreviewImage)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("BookID is required."))
+	})
+}

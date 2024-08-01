@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type Genre struct {
 	gorm.Model
-	Name        string `form:"name" json:"name"`
-	Description string `form:"description" json:"description"`
+	Name        string `form:"name" json:"name" valid:"required~Name is required."`
+	Description string `form:"description" json:"description" valid:"required~Description is required."`
 
-	Books []Book `gorm:"many2many:book_genre;"`
+	Books []Book `gorm:"many2many:book_genre;" json:"products" valid:"-"`
 }

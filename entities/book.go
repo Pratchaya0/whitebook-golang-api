@@ -4,28 +4,28 @@ import "gorm.io/gorm"
 
 type Book struct {
 	gorm.Model
-	Name        string
-	Description string
-	Price       float64
-	CategoryID  uint
+	Name        string  `form:"name" json:"name" valid:"required~Name is required."`
+	Description string  `form:"description" json:"description" valid:"required~Description is required."`
+	Price       float64 `form:"price" json:"price" valid:"required~Price is required."`
+	CategoryID  uint    `form:"category" json:"category" valid:"required~CategoryID is required."`
 
 	// File
-	CoverImage string
-	BookPdf    string
-	BookEpub   string
+	CoverImage string `json:"coverImage" valid:"required~CoverImage is required."`
+	BookPdf    string `json:"bookPdf" valid:"required~BookPdf is required."`
+	BookEpub   string `json:"bookEpub" valid:"required~BookEpub is required."`
 
-	Genres []Genre `gorm:"many2many:book_genre;"`
+	Genres []Genre `gorm:"many2many:book_genre;" valid:"-"`
 
-	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookID"`
-	Reviews           []Review           `gorm:"foreignKey:BookID"`
-	Orders            []Order            `gorm:"many2many:book_order;"`
-	CartItems         []CartItem         `gorm:"foreignKey:BookID"`
+	BookPreviewImages []BookPreviewImage `gorm:"foreignKey:BookID" valid:"-"`
+	Reviews           []Review           `gorm:"foreignKey:BookID" valid:"-"`
+	Orders            []Order            `gorm:"many2many:book_order;" valid:"-"`
+	CartItems         []CartItem         `gorm:"foreignKey:BookID" valid:"-"`
 }
 
 type BookPreviewImage struct {
 	gorm.Model
-	PageNumber uint
-	ImageLink  string
+	PageNumber uint   `json:"pageNumber" valid:"required~PageNumber is required."`
+	ImageLink  string `json:"imageLink" valid:"required~ImageLink is required."`
 
-	BookID uint
+	BookID uint `json:"bookId" valid:"required~BookID is required."`
 }

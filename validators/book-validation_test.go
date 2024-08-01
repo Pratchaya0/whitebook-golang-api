@@ -1,194 +1,132 @@
 package validators
 
-// import (
-// 	"testing"
+import (
+	"testing"
 
-// 	. "github.com/Pratchaya0/whitebook-golang-api/entities"
-// 	"github.com/asaskevich/govalidator"
-// 	. "github.com/onsi/gomega"
-// )
+	. "github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/asaskevich/govalidator"
+	. "github.com/onsi/gomega"
+)
 
-// func TestBookValidateNotBlank(t *testing.T) {
-// 	g := NewGomegaWithT(t)
-// 	bookCategoryId := uint(1)
+func TestBookValidateNotBlank(t *testing.T) {
+	g := NewGomegaWithT(t)
 
-// 	t.Run("check [BookName] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			// BookName:          "BookName",
-// 			BookDescription:   "BookDescription",
-// 			BookPrice:         "BookPrice",
-// 			BookWriter:        "BookWriter",
-// 			BookPublisher:     "BookPublisher",
-// 			BookIsOnSale:      true,
-// 			BookCoverImageUrl: "BookCoverImageUrl",
-// 			BookUrl:           "BookUrl",
+	t.Run("Check [Name] not blank.", func(t *testing.T) {
+		book := Book{
+			// Name:        "TestName",
+			Description: "Test Description",
+			Price:       123.00,
+			CategoryID:  TEMP_UINT,
+			CoverImage:  TEMP_LINK,
+			BookPdf:     TEMP_LINK,
+			BookEpub:    TEMP_LINK,
+		}
 
-// 			BookCategoryId: &bookCategoryId,
-// 		}
+		ok, err := govalidator.ValidateStruct(book)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("Name is required."))
+	})
 
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please input name"))
-// 	})
+	t.Run("Check [Description] not blank.", func(t *testing.T) {
+		book := Book{
+			Name: "TestName",
+			// Description: "Test Description",
+			Price:      123.00,
+			CategoryID: TEMP_UINT,
+			CoverImage: TEMP_LINK,
+			BookPdf:    TEMP_LINK,
+			BookEpub:   TEMP_LINK,
+		}
 
-// 	t.Run("check [BookDescription] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			BookName: "BookName",
-// 			// BookDescription:   "BookDescription",
-// 			BookPrice:         "BookPrice",
-// 			BookWriter:        "BookWriter",
-// 			BookPublisher:     "BookPublisher",
-// 			BookIsOnSale:      true,
-// 			BookCoverImageUrl: "BookCoverImageUrl",
-// 			BookUrl:           "BookUrl",
+		ok, err := govalidator.ValidateStruct(book)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("Description is required."))
+	})
 
-// 			BookCategoryId: &bookCategoryId,
-// 		}
+	t.Run("Check [Price] not blank.", func(t *testing.T) {
+		book := Book{
+			Name:        "TestName",
+			Description: "Test Description",
+			// Price:       123.00,
+			CategoryID: TEMP_UINT,
+			CoverImage: TEMP_LINK,
+			BookPdf:    TEMP_LINK,
+			BookEpub:   TEMP_LINK,
+		}
 
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please input description"))
-// 	})
+		ok, err := govalidator.ValidateStruct(book)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("Price is required."))
+	})
 
-// 	t.Run("check [BookPrice] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			BookName:        "BookName",
-// 			BookDescription: "BookDescription",
-// 			// BookPrice:         "BookPrice",
-// 			BookWriter:        "BookWriter",
-// 			BookPublisher:     "BookPublisher",
-// 			BookIsOnSale:      true,
-// 			BookCoverImageUrl: "BookCoverImageUrl",
-// 			BookUrl:           "BookUrl",
+	t.Run("Check [CategoryID] not blank.", func(t *testing.T) {
+		book := Book{
+			Name:        "TestName",
+			Description: "Test Description",
+			Price:       123.00,
+			// CategoryID:  TEMP_UINT,
+			CoverImage: TEMP_LINK,
+			BookPdf:    TEMP_LINK,
+			BookEpub:   TEMP_LINK,
+		}
 
-// 			BookCategoryId: &bookCategoryId,
-// 		}
+		ok, err := govalidator.ValidateStruct(book)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("CategoryID is required."))
+	})
 
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please input price"))
-// 	})
+	t.Run("Check [CoverImage] not blank.", func(t *testing.T) {
+		book := Book{
+			Name:        "TestName",
+			Description: "Test Description",
+			Price:       123.00,
+			CategoryID:  TEMP_UINT,
+			// CoverImage:  TEMP_LINK,
+			BookPdf:  TEMP_LINK,
+			BookEpub: TEMP_LINK,
+		}
 
-// 	t.Run("check [BookWriter] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			BookName:        "BookName",
-// 			BookDescription: "BookDescription",
-// 			BookPrice:       "BookPrice",
-// 			// BookWriter:        "BookWriter",
-// 			BookPublisher:     "BookPublisher",
-// 			BookIsOnSale:      true,
-// 			BookCoverImageUrl: "BookCoverImageUrl",
-// 			BookUrl:           "BookUrl",
+		ok, err := govalidator.ValidateStruct(book)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("CoverImage is required."))
+	})
 
-// 			BookCategoryId: &bookCategoryId,
-// 		}
+	t.Run("Check [BookPdf] not blank.", func(t *testing.T) {
+		book := Book{
+			Name:        "TestName",
+			Description: "Test Description",
+			Price:       123.00,
+			CategoryID:  TEMP_UINT,
+			CoverImage:  TEMP_LINK,
+			// BookPdf:     TEMP_LINK,
+			BookEpub: TEMP_LINK,
+		}
 
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please input writer"))
-// 	})
+		ok, err := govalidator.ValidateStruct(book)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("BookPdf is required."))
+	})
 
-// 	t.Run("check [BookPublisher] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			BookName:        "BookName",
-// 			BookDescription: "BookDescription",
-// 			BookPrice:       "BookPrice",
-// 			BookWriter:      "BookWriter",
-// 			// BookPublisher:     "BookPublisher",
-// 			BookIsOnSale:      true,
-// 			BookCoverImageUrl: "BookCoverImageUrl",
-// 			BookUrl:           "BookUrl",
+	t.Run("Check [BookEpub] not blank.", func(t *testing.T) {
+		book := Book{
+			Name:        "TestName",
+			Description: "Test Description",
+			Price:       123.00,
+			CategoryID:  TEMP_UINT,
+			CoverImage:  TEMP_LINK,
+			BookPdf:     TEMP_LINK,
+			// BookEpub:    TEMP_LINK,
+		}
 
-// 			BookCategoryId: &bookCategoryId,
-// 		}
-
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please input publisher"))
-// 	})
-
-// 	t.Run("check [BookIsOnSale] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			BookName:        "BookName",
-// 			BookDescription: "BookDescription",
-// 			BookPrice:       "BookPrice",
-// 			BookWriter:      "BookWriter",
-// 			BookPublisher:   "BookPublisher",
-// 			// BookIsOnSale:      true,
-// 			BookCoverImageUrl: "BookCoverImageUrl",
-// 			BookUrl:           "BookUrl",
-
-// 			BookCategoryId: &bookCategoryId,
-// 		}
-
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please input is on sale"))
-// 	})
-
-// 	t.Run("check [BookCoverImageUrl] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			BookName:        "BookName",
-// 			BookDescription: "BookDescription",
-// 			BookPrice:       "BookPrice",
-// 			BookWriter:      "BookWriter",
-// 			BookPublisher:   "BookPublisher",
-// 			BookIsOnSale:    true,
-// 			// BookCoverImageUrl: "BookCoverImageUrl",
-// 			BookUrl: "BookUrl",
-
-// 			BookCategoryId: &bookCategoryId,
-// 		}
-
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please input cover image"))
-// 	})
-
-// 	t.Run("check [BookUrl] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			BookName:          "BookName",
-// 			BookDescription:   "BookDescription",
-// 			BookPrice:         "BookPrice",
-// 			BookWriter:        "BookWriter",
-// 			BookPublisher:     "BookPublisher",
-// 			BookIsOnSale:      true,
-// 			BookCoverImageUrl: "BookCoverImageUrl",
-// 			// BookUrl:           "BookUrl",
-
-// 			BookCategoryId: &bookCategoryId,
-// 		}
-
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please input book"))
-// 	})
-
-// 	t.Run("check [BookCategoryId] not blank", func(t *testing.T) {
-// 		book := Book{
-// 			BookName:          "BookName",
-// 			BookDescription:   "BookDescription",
-// 			BookPrice:         "BookPrice",
-// 			BookWriter:        "BookWriter",
-// 			BookPublisher:     "BookPublisher",
-// 			BookIsOnSale:      true,
-// 			BookCoverImageUrl: "BookCoverImageUrl",
-// 			BookUrl:           "BookUrl",
-
-// 			// BookCategoryId: &bookCategoryId,
-// 		}
-
-// 		ok, err := govalidator.ValidateStruct(book)
-// 		g.Expect(ok).To(BeFalse())
-// 		g.Expect(err).To(HaveOccurred())
-// 		g.Expect(err.Error()).To(Equal("Please select category"))
-// 	})
-// }
+		ok, err := govalidator.ValidateStruct(book)
+		g.Expect(ok).To(BeFalse())
+		g.Expect(err).To(HaveOccurred())
+		g.Expect(err.Error()).To(Equal("BookEpub is required."))
+	})
+}

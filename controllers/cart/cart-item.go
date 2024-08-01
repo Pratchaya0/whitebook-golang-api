@@ -64,7 +64,7 @@ func CreateCartItem(c *gin.Context) {
 }
 
 func UpdateCartItem(c *gin.Context) {
-
+	// TODO Update status
 }
 
 // not use

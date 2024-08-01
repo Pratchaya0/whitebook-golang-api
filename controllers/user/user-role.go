@@ -8,6 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// The request body is described by the @Param annotation, which has the following syntax:
+
+//  @Param [param_name] [param_type] [data_type] [required/mandatory] [description]
+// The param_type can be one of the following values:
+
+// query (indicates a query param)
+// path (indicates a path param)
+// header (indicates a header param)
+// body
+// formData
+
 func GetListUserRoles(c *gin.Context) {
 	var userRoles []entities.UserRole
 
@@ -58,4 +69,8 @@ func CreateUserRole(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, webResponse)
+}
+
+func UpdateUserRole(c *gin.Context) {
+
 }
