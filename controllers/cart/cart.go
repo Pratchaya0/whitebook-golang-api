@@ -2,6 +2,7 @@ package cart
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
 	"github.com/Pratchaya0/whitebook-golang-api/helpers"
@@ -35,10 +36,11 @@ func CreateCart(c *gin.Context, userId uint) {
 }
 
 func GetListCartsByUserId(c *gin.Context) {
-	userId := c.Param("userId")
-	var carts []entities.Cart
+	var carts entities.Cart
 
-	if tx := entities.DB().Preload("Items").Where("user_id = ?", userId).Find(&carts); tx.RowsAffected == 0 {
+	userId, _ := strconv.ParseUint(c.Param("id"), 10, 32)
+
+	if tx := entities.DB().Preload("User").Preload("Items").Preload("Items.Book").Preload("Items.CartItemStatus").Where(&entities.Cart{UserID: uint(userId)}).First(&carts); tx.RowsAffected == 0 {
 		helpers.RespondWithJSON(c, http.StatusNotFound, "Cart is empty.", nil)
 		return
 	}

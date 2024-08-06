@@ -38,12 +38,7 @@ func CreateCartItem(c *gin.Context) {
 	}
 
 	// check cartItem already added?
-	if err := entities.DB().Where(&entities.CartItem{CartID: cartItem.CartID, BookID: cartItem.BookID}).First(&cartItem).Error; err != nil {
-		helpers.RespondWithJSON(c, http.StatusNotFound, err.Error(), nil)
-		return
-	}
-
-	if cartItem != nil {
+	if tx := entities.DB().Where(&entities.CartItem{CartID: cartItem.CartID, BookID: cartItem.BookID}).First(&cartItem); tx.RowsAffected > 0 {
 		helpers.RespondWithJSON(c, http.StatusOK, "This product already added.", cartItem)
 		return
 	}

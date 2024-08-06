@@ -5,6 +5,7 @@ import (
 
 	"net/http"
 
+	"github.com/Pratchaya0/whitebook-golang-api/controllers"
 	"github.com/Pratchaya0/whitebook-golang-api/controllers/book"
 	"github.com/Pratchaya0/whitebook-golang-api/controllers/cart"
 	"github.com/Pratchaya0/whitebook-golang-api/controllers/category"
@@ -14,6 +15,7 @@ import (
 	"github.com/Pratchaya0/whitebook-golang-api/controllers/review"
 	"github.com/Pratchaya0/whitebook-golang-api/controllers/user"
 	"github.com/Pratchaya0/whitebook-golang-api/entities"
+	"github.com/Pratchaya0/whitebook-golang-api/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,169 +40,70 @@ func main() {
 
 	r.Use(CORSMiddleware())
 
-	// router := r.Group("/")
-	// {
-	// 	protected := router.Use(middlewares.Authorizes())
-	// 	{
-	// 		// Advertise
-	// 		protected.GET("advertisements", advertisements.GetListAdvertisements)
-	// 		protected.GET("advertisement/:id", advertisements.GetAdvertisement)
-	// 		protected.POST("advertisement/create", advertisements.CreateAdvertisement)
-	// 		protected.PATCH("advertisement/update", advertisements.UpdateAdvertisement)
-	// 		protected.DELETE("advertisement/delete/:id", advertisements.DeleteAdvertisement)
+	router := r.Group("/")
+	{
+		protected := router.Use(middlewares.Authorizes())
+		{
+			protected.GET("/books", book.GetListBooks)
+			protected.GET("/book/:id", book.GetBook)
+			protected.POST("/book/create", book.CreateBook)
+			protected.PUT("/book/update", book.UpdateBook)
+			protected.DELETE("/book/:id/delete", book.DeleteBook)
 
-	// 		// Book
-	// 		protected.GET("books", books.GetListBooks)
-	// 		protected.GET("book/:id", books.GetBook)
-	// 		protected.POST("book/create", books.CreateBook)
-	// 		protected.PATCH("book/update", books.UpdateBook)
-	// 		protected.DELETE("book/delete/:id", books.DeleteBook)
+			protected.GET("/categories", category.GetListCategories)
+			protected.GET("/category/:id", category.GetCategory)
+			protected.POST("/category/create", category.CreateCategory)
+			protected.PUT("/category/update", category.UpdateCategory)
+			protected.DELETE("/category/:id/delete", category.DeleteCategory)
 
-	// 		// Book Preview Image
-	// 		protected.GET("book-preview-images", books.GetListBookPreviewImages)
-	// 		protected.GET("book-preview-image/:id", books.GetBookPreviewImage)
-	// 		protected.POST("book-preview-image/create", books.CreateBookPreviewImage)
-	// 		protected.PATCH("book-preview-image/update", books.UpdateBookPreviewImage)
-	// 		protected.DELETE("book-preview-image/delete/:id", books.DeleteBookPreviewImage)
+			protected.GET("/genres", genre.GetListGenres)
+			protected.GET("/genre/:id", genre.GetGenre)
+			protected.POST("/genre/create", genre.CreateGenre)
+			protected.PUT("/genre/update", genre.UpdateGenre)
+			protected.DELETE("/genre/:id/delete", genre.DeleteGenre)
 
-	// 		// Book User Detail
-	// 		protected.GET("book-user-details", books.GetListBookUserDetails)
-	// 		protected.GET("book-user-detail", books.GetBookUserDetail)
-	// 		protected.POST("book-user-detail/create", books.CreateBookUserDetail)
-	// 		protected.PATCH("book-user-detail/update", books.UpdateBookUserDetail)
-	// 		protected.DELETE("book-user-detail/delete/:id", books.DeleteBookUserDetail)
+			protected.POST("/order/create", order.CreateOrder)
+			protected.PUT("/order/update", order.UpdateOrder)
 
-	// 		// Cart
-	// 		protected.GET("carts", carts.GetListCarts)
-	// 		protected.GET("cart/:id", carts.GetCart)
-	// 		protected.POST("cart/create", carts.CreateCart)
-	// 		protected.PATCH("cart/update", carts.UpdateCart)
-	// 		protected.DELETE("cart/delete/:id", carts.DeleteCart)
+			protected.GET("/paymentMethods", payment.GetListPaymentMethods)
+			protected.GET("/paymentMethod/:id", payment.GetPaymentMethod)
+			protected.POST("/paymentMethod/create", payment.CreatePaymentMethod)
+			protected.PUT("/paymentMethod/update", payment.UpdatePaymentMethod)
+			protected.DELETE("/paymentMethod/:id/delete", payment.DeletePaymentMethod)
 
-	// 		// Category
-	// 		protected.GET("categories", categories.GetListCategories)
-	// 		protected.GET("category/:id", categories.GetCategory)
-	// 		protected.POST("category/create", categories.CreateCategory)
-	// 		protected.PATCH("category/update", categories.UpdateCategory)
-	// 		protected.DELETE("category/delete/:id", categories.DeleteCategory)
+			protected.GET("/reviews/:id/book", review.GetListReviewsByBookID)
+			protected.GET("/reviews/:id/user", review.GetListReviewsByUserID)
+			protected.GET("/review/:id", review.GetReview)
+			protected.POST("/review/create", review.CreateReview)
+			protected.PUT("/review/update", review.UpdateReview)
+			protected.DELETE("/review/:id/delete", review.DeleteReview)
 
-	// 		// Genre
-	// 		protected.GET("genres", genres.GetListGenres)
-	// 		protected.GET("genre/:id", genres.GetGenre)
-	// 		protected.POST("genre/create", genres.CreateGenre)
-	// 		protected.PATCH("genre/update", genres.UpdateGenre)
-	// 		protected.DELETE("genre/delete/:id", genres.DeleteGenre)
+			protected.GET("/cart/list/:id", cart.GetListCartsByUserId)
 
-	// 		// Genre Book
-	// 		protected.GET("genre-books", genres.GetListGenreBooks)
-	// 		protected.GET("genre-book/:id", genres.GetGenreBook)
-	// 		protected.POST("genre-book/create", genres.CreateGenreBook)
-	// 		protected.PATCH("genre-book/update", genres.UpdateGenreBook)
-	// 		protected.DELETE("genre-book/delete/:id", genres.DeleteGenreBook)
+			protected.POST("/cartItem/add", cart.CreateCartItem)
+			protected.DELETE("/cartItem/:id/delete", cart.DeleteCartItem)
 
-	// 		// Order
-	// 		protected.GET("orders", orders.GetListOrders)
-	// 		protected.GET("order/:id", orders.GetOrder)
-	// 		protected.POST("order/create", orders.CreateOrder)
-	// 		protected.PATCH("order/update", orders.UpdateOrders)
-	// 		protected.DELETE("order/delete/:id", orders.DeleteOrder)
+			protected.GET("/users", user.GetListUsers)
+			protected.GET("/user/:id", user.GetUser)
+			protected.PUT("/user/update", user.UpdateUser)
+			protected.DELETE("/user/delete", user.DeleteUser)
 
-	// 		// Order Detail
-	// 		protected.GET("order-details", orders.GetListOrderBookDetails)
-	// 		protected.GET("order-detail/:id", orders.GetOrderBookDetail)
-	// 		protected.POST("order-detail/create", orders.CreateOrderBookDetail)
-	// 		protected.PATCH("order-detail/update", orders.UpdateOrderBookDetail)
-	// 		protected.DELETE("order-detail/delete/:id", orders.DeleteOrderBookDetail)
-
-	// 		// Payment information
-	// 		protected.GET("payment-infos", paymentInfos.GetListPaymentInfos)
-	// 		protected.GET("payment-info/:id", paymentInfos.GetPaymentInfo)
-	// 		protected.POST("payment-info/create", paymentInfos.CreatePaymentInfo)
-	// 		protected.PATCH("payment-info/update", paymentInfos.UpdatePaymentInfo)
-	// 		protected.DELETE("payment-info/delete/:id", paymentInfos.DeletePaymentInfo)
-
-	// 		// Review
-	// 		protected.GET("reviews", reviews.GetListReviews)
-	// 		protected.GET("review/:id", reviews.GetReview)
-	// 		protected.POST("review/create", reviews.CreateReview)
-	// 		protected.PATCH("review/update", reviews.UpdateReview)
-	// 		protected.DELETE("review/delete/:id", reviews.DeleteReview)
-
-	// 		// User
-	// 		protected.GET("users", users.GetListUsers)
-	// 		protected.GET("user/:id", users.GetUser)
-	// 		protected.PATCH("user/update", users.UpdateUser)
-	// 		protected.DELETE("user/delete", users.DeleteUser)
-
-	// 		// User Role
-	// 		protected.GET("user-roles", users.GetListUserRoles)
-	// 		protected.GET("user-role/:id", users.GetListUsers)
-	// 		protected.POST("user-role/create", users.CreateUserRole)
-	// 		protected.PATCH("user-role/update", users.UpdateUserRole)
-	// 		protected.DELETE("user-role/delete", users.DeleteUserRole)
-
-	// 		// Web Information
-	// 		protected.GET("web-info", webInfos.GetWebInfo)
-	// 		protected.PATCH("web-info/update", webInfos.UpdateWebInfo)
-	// 	}
-	// }
+			protected.GET("/userRoles", user.GetListUserRoles)
+			protected.GET("/userRole", user.GetUserRole)
+			protected.POST("/userRole/create", user.CreateUserRole)
+		}
+	}
 
 	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
-	// // Sign Up User Route
-	// r.POST("/signup", controllers.SignUp)
-	// // login User Route
-	// r.POST("/login", controllers.Login)
-	// Run the server go run main.go
-	r.GET("/hello", func(ctx *gin.Context) {
+	r.GET("/healthCheck", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, "OK")
 	})
 
-	r.GET("/books", book.GetListBooks)
-	r.GET("/book/:id", book.GetBook)
-	r.POST("/book/create", book.CreateBook)
-	r.PATCH("/book/update", book.UpdateBook)
-	r.DELETE("/book/:id/delete", book.DeleteBook)
-
-	r.GET("/categories", category.GetListCategories)
-	r.GET("/category/:id", category.GetCategory)
-	r.POST("/category/create", category.CreateCategory)
-	r.PATCH("/category/update", category.UpdateCategory)
-	r.DELETE("/category/:id/delete", category.DeleteCategory)
-
-	r.GET("/genres", genre.GetListGenres)
-	r.GET("/genre/:id", genre.GetGenre)
-	r.POST("/genre/create", genre.CreateGenre)
-	r.PATCH("/genre/update", genre.UpdateGenre)
-	r.DELETE("/genre/:id/delete", genre.DeleteGenre)
-
-	// --- ยังไม่ได้ test
-	r.POST("/order/create", order.CreateOrder)
-	r.PATCH("/order/update", order.UpdateOrder)
-
-	r.GET("/paymentMethods", payment.GetListPaymentMethods)
-	r.GET("/paymentMethod/:id", payment.GetPaymentMethod)
-	r.POST("/paymentMethod/create", payment.CreatePaymentMethod)
-	r.PATCH("/paymentMethod/update", payment.UpdatePaymentMethod)
-	r.DELETE("/paymentMethod/:id/delete", payment.DeletePaymentMethod)
-
-	r.GET("/reviews/:id/book", review.GetListReviewsByBookID)
-	r.GET("/reviews/:id/user", review.GetListReviewsByUserID)
-	r.GET("/review/:id", review.GetReview)
-	r.POST("/review/create", review.CreateReview)
-	r.PATCH("/review/update", review.UpdateReview)
-	r.DELETE("/review/delete", review.DeleteReview)
-
-	r.GET("/cart/list/:id", cart.GetListCartsByUserId)
-
-	r.GET("/users", user.GetListUsers)
-	r.GET("/user", user.GetUser)
-	r.PATCH("/user/update", user.UpdateUser)
-	r.DELETE("/user/delete", user.DeleteUser)
-
-	r.GET("/userRoles", user.GetListUserRoles)
-	r.GET("/userRole", user.GetUserRole)
-	r.POST("/userRole/create", user.CreateUserRole)
+	// Sign Up User Route
+	r.POST("/signup", controllers.SignUp)
+	// login User Route
+	r.POST("/login", controllers.Login)
 
 	r.Run() // "localhost: " + PORT
 }

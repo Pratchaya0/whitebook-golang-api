@@ -148,7 +148,7 @@ func GetListBooks(c *gin.Context) {
 		return
 	}
 
-	if err := entities.DB().Preload("BookPreviewImages").Preload("Reviews").Preload("Genres").Preload("Orders").Preload("Carts").Scopes(entities.Paginate(books, &paginationDto)).Find(&books).Error; err != nil {
+	if err := entities.DB().Preload("BookPreviewImages").Preload("Reviews").Preload("Genres").Scopes(entities.Paginate(books, &paginationDto)).Find(&books).Error; err != nil {
 		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
@@ -171,7 +171,7 @@ func GetBook(c *gin.Context) {
 	id := c.Param("id")
 	var book entities.Book
 
-	if tx := entities.DB().Preload("BookPreviewImages").Preload("Reviews").Preload("Genres").Preload("Orders").Preload("Carts").Where("id = ?", id).First(&book); tx.RowsAffected == 0 {
+	if tx := entities.DB().Preload("BookPreviewImages").Preload("Reviews").Preload("Genres").Where("id = ?", id).First(&book); tx.RowsAffected == 0 {
 		helpers.RespondWithJSON(c, http.StatusBadRequest, fmt.Sprintf("Book [id: %s] not found.", id), nil)
 		return
 	}

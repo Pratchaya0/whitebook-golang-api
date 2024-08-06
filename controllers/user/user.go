@@ -14,8 +14,8 @@ func GetListUsers(c *gin.Context) {
 	// !!! only admin or higher
 	var users []entities.User
 
-	if err := entities.DB().Preload("UserRoles").Find(&users).Error; err != nil {
-		helpers.RespondWithJSON(c, http.StatusBadRequest, err.Error(), nil)
+	if tx := entities.DB().Preload("UserRoles").Find(&users); tx.RowsAffected < 0 {
+		helpers.RespondWithJSON(c, http.StatusNotFound, fmt.Sprintf("No user data."), nil)
 		return
 	}
 
